@@ -55,7 +55,9 @@ public class Atendimento {
 
 	@Override
 	public String toString() {
-		return "Atendimento [codigo=" + codigo + ", date=" + date + "]";
+		return "\n#########################################################\n"
+	 	 + "#                   DADOS ATENDIMENTO                   #\n"
+		 + "# Código = " + codigo + "\n# Data = " + date;
 	}
 	
 	

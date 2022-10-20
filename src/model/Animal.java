@@ -53,7 +53,9 @@ public class Animal {
 	}
 	@Override
 	public String toString() {
-		return "Animal [codigo=" + codigo + ", nome=" + nome + ", endereco=" + endereco + ", cidade=" + cidade + "]";
+		return "\n#########################################################\n"
+		 	 + "#                      DADOS ANIMAL                     #\n"
+			 + "# Código = " + codigo + "\n# Nome = " + nome + "\n# Endereco = " + endereco + "\n# Cidade = " + cidade ;
 	}
 	
 	

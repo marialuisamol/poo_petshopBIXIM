@@ -15,7 +15,7 @@ public class Util {
 				valor = entrada.nextInt();
 				erro = false;
 			} catch (Exception e) {
-				System.out.println("Erro ao digitar. Tente novamente.");
+				System.out.println("# Erro ao digitar. Tente novamente.");
 				entrada = null;
 			}
 		}
@@ -32,7 +32,7 @@ public class Util {
 				valor = entrada.nextFloat();
 				erro = false;
 			} catch (Exception e) {
-				System.out.println("Erro ao digitar. Tente novamente.");
+				System.out.println("# Erro ao digitar. Tente novamente.");
 				entrada = null;
 			}
 
@@ -50,7 +50,7 @@ public class Util {
 				valor = entrada.nextLine();
 				erro = false;
 			} catch (Exception e) {
-				System.out.println("Erro ao digitar. Tente novamente.");
+				System.out.println("# Erro ao digitar. Tente novamente.");
 				entrada = null;
 			}
 		}
@@ -67,7 +67,7 @@ public class Util {
 				valor = entrada.next().charAt(0);
 				erro = false;
 			} catch (Exception e) {
-				System.out.println("Erro ao digitar. Tente novamente.");
+				System.out.println("# Erro ao digitar. Tente novamente.");
 				entrada = null;
 			}
 		}
@@ -86,7 +86,7 @@ public class Util {
 				valor = df.parse(dtString);
 				erro = false;
 			} catch (Exception e) {
-				System.out.println("Erro ao digitar. Tente novamente.");
+				System.out.println("# Erro ao digitar. Tente novamente.");
 				entrada = null;
 			}
 		}
@@ -100,7 +100,7 @@ public class Util {
 		try {
 			retorno = df.parse(dt);
 		} catch (Exception e) {
-			System.out.println("Erro ao digitar a data. Tente novamente.");
+			System.out.println("# Erro ao digitar a data. Tente novamente.");
 			retorno = null;
 		}
 		return retorno;
@@ -112,7 +112,7 @@ public class Util {
 		try {
 			retorno = df.format(dt);
 		} catch (Exception e) {
-			System.out.println("Erro ao converter a data. Tente novamente.");
+			System.out.println("# Erro ao converter a data. Tente novamente.");
 			retorno = null;
 		}
 		return retorno;

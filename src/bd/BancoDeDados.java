@@ -14,7 +14,7 @@ public class BancoDeDados {
 	private BancoDeDados() {
 		animais = new Animal[10];
 		servicos = new Servico[10];
-		atendimentos = new Atendimento[10];
+		atendimentos = new Atendimento[20];
 	}
 	
 	public static BancoDeDados getInstance() {
@@ -27,14 +27,14 @@ public class BancoDeDados {
 	
 	public static Animal[] getAnimais() {
 		
-		return bancoDeDados.animais;
+		return getInstance().animais;
 	}
 	
 	public static Servico[] getServicos() {
-		return bancoDeDados.servicos;
+		return getInstance().servicos;
 	}
 	
 	public static Atendimento[] getAtendimentos() {
-		return bancoDeDados.atendimentos;
+		return getInstance().atendimentos;
 	}
 }
