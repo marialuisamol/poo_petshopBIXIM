@@ -53,7 +53,9 @@ public class AnimalDAO {
 	
 	public void limpaDados() {
 		
-		animais = new Animal[animais.length];
+		for(int i = 0; i < animais.length; i++) {
+			animais[i] = null;
+		}
 		
 	}
 	

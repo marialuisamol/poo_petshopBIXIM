@@ -2,6 +2,8 @@ package model;
 
 import java.util.Date;
 
+import util.Util;
+
 public class Atendimento {
 	
 	private int codigo;
@@ -57,7 +59,7 @@ public class Atendimento {
 	public String toString() {
 		return "\n#########################################################\n"
 	 	 + "#                   DADOS ATENDIMENTO                   #\n"
-		 + "# Código = " + codigo + "\n# Data = " + date;
+		 + "# Código = " + codigo + "\n# Data = " + Util.dateParaString(date);
 	}
 	
 	

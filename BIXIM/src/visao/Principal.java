@@ -147,7 +147,7 @@ public class Principal {
 						}//case 0
 						
 						default:
-							throw new IllegalArgumentException("# Opção Inválida!                                       #\n"
+							throw new IllegalArgumentException("\n# Opção Inválida!                                       #\n"
 															 + "#########################################################");
 						}//default
 						//FIM MENU ANIMAL
@@ -244,7 +244,7 @@ public class Principal {
 						}//case 0
 						
 						default:
-							throw new IllegalArgumentException("# Opção Inválida!                                       #\n"
+							throw new IllegalArgumentException("\n# Opção Inválida!                                       #\n"
 															 + "#########################################################");
 						}//default
 						//FIM MENU SERVIÇO
@@ -388,14 +388,22 @@ public class Principal {
 			case 7:{
 				System.out.println("#########################################################\n"
 								 + "#                   EMITIR NOTA FISCAL                  #\n");
-				System.out.println("# Deseja realmente imprimir o relatório? (s/n)          #\n");
+				System.out.println("# Deseja realmente emitir nota fiscal? (s/n)            #\n");
 				char carac = Util.leChar();
 				
 				if(carac == 'n' || carac == 'N') {
 					break;
 				}
 				else if(carac == 's' || carac == 'S') {
-					
+					System.out.println("# Digite o código do animal: ");
+					int codigo = Util.leInteiro();
+					try {
+						String notaFiscal = atendimentoService.getNotaFiscal(codigo);
+						System.out.println(notaFiscal);
+					}
+					catch (Error e){
+						System.out.println(("# ") + e.getMessage());
+					}
 				}
 				else {
 					System.out.println("# Caractere inválido!                                   #\n");
@@ -407,7 +415,7 @@ public class Principal {
 			case 8: {
 				System.out.println("#########################################################\n"
 								 + "#                 LIMPAR BANCO DE DADOS                 #\n");
-				System.out.println("# Deseja realmente imprimir o relatório? (s/n)          #\n");
+				System.out.println("# Deseja realmente limpar o banco de dados? (s/n)       #\n");
 				char carac = Util.leChar();
 				
 				if(carac == 'n' || carac == 'N') {
@@ -453,7 +461,7 @@ public class Principal {
 			}//case 0
 				
 			default:
-				throw new IllegalArgumentException("# Opção Inválida!                                       #\n"
+				throw new IllegalArgumentException("\n# Opção Inválida!                                       #\n"
 												 + "#########################################################");
 			}//default
 			

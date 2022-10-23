@@ -50,7 +50,10 @@ public class ServicoDAO {
 	}
 	
 	public void limpaDados() {
-		servicos = new Servico[servicos.length];
+		for(int i = 0; i < servicos.length; i++) {
+			
+			servicos[i] = null;
+		}
 	}
 	
 	public Servico getServico(int codigo) {

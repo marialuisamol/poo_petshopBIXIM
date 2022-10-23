@@ -54,7 +54,9 @@ public class AtendimentoDAO {
 	
 	public void limpaDados() {
 		
-		atendimentos = new Atendimento[atendimentos.length];
+		for (int i = 0; i < atendimentos.length; i++) {
+			atendimentos[i] = null;
+		}
 	}
 	
 	public Atendimento getAtendimento(int codigo) {
