@@ -6,24 +6,44 @@ import model.Atendimento;
 public class AtendimentoService {
 	
 	private AtendimentoDAO atendimentoDAO;
+	private AnimalService animalService;
+	private ServicoService servicoService;
 	
 	public AtendimentoService() {
 		atendimentoDAO = new AtendimentoDAO();
+		animalService = new AnimalService();
+		servicoService = new ServicoService();
 	}
 	
 	public boolean inserir(Atendimento atendimento){
-		return atendimentoDAO.inserir(atendimento);
+		
+		boolean sucesso = atendimentoDAO.inserir(atendimento);
+		if(sucesso == false) {
+			throw new Error("Não há espaço suficiente!");
+		}
+		return sucesso;
+		
 	}
 	public boolean alterar(int codigo, Atendimento atendimento) {
-		return atendimentoDAO.alterar(codigo, atendimento);
+		
+		boolean sucesso = atendimentoDAO.alterar(codigo, atendimento);
+		if(sucesso == false) {
+			throw new Error("Código não encontrado!");
+		}
+		return sucesso;
 	}
 	public boolean remover(int codigo) {
-		return atendimentoDAO.remover(codigo);
+		
+		boolean sucesso = atendimentoDAO.remover(codigo);
+		if(sucesso == false) {
+			throw new Error("Código não encontrado!");
+		}
+		return sucesso;
 	}
-	public void limpaDados(int codigo) {
+	public void limpaDados() {
 		atendimentoDAO.limpaDados();
 	}
-	public Atendimento getAnimal(int codigo) {
+	public Atendimento getAtendimento(int codigo) {
 		return atendimentoDAO.getAtendimento(codigo);
 	}
 
@@ -32,6 +52,9 @@ public class AtendimentoService {
 		return "AnimalService [atendimentoDAO=" + atendimentoDAO + "]";
 	}
 	
+	public String getNotaFiscal(int codigo) {
+		
+	}
 	
 
 }

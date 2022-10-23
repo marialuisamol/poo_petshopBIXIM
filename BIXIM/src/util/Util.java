@@ -2,6 +2,7 @@ package util;
 
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class Util {
@@ -78,7 +79,8 @@ public class Util {
 		Scanner entrada;
 		Date valor = null;
 		boolean erro = true;
-		DateFormat df = DateFormat.getDateInstance();
+		//TODO: TROCAR A DATA
+		DateFormat df = DateFormat.getDateInstance(DateFormat.SHORT, Locale.CANADA);
 		while (erro) {
 			try {
 				entrada = new Scanner(System.in);

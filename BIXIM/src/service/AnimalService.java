@@ -12,15 +12,33 @@ public class AnimalService {
 	}
 	
 	public boolean inserir(Animal animal){
-		return animalDAO.inserir(animal);
+		if (this.getAnimal(animal.getCodigo()) != null) {
+			throw new Error("Código existente!");
+		}
+		boolean sucesso = animalDAO.inserir(animal);
+		if(sucesso == false) {
+			throw new Error("Não há espaço suficiente!");
+		}
+		return sucesso;
 	}
 	public boolean alterar(int codigo, Animal animal) {
-		return animalDAO.alterar(codigo, animal);
+		if (this.getAnimal(animal.getCodigo()) != null) {
+			throw new Error("Código existente!");
+		}
+		boolean sucesso = animalDAO.alterar(codigo, animal);
+		if(sucesso == false) {
+			throw new Error("Código não encontrado!");
+		}
+		return sucesso;
 	}
 	public boolean remover(int codigo) {
-		return animalDAO.remover(codigo);
+		boolean sucesso = animalDAO.remover(codigo);
+		if(sucesso == false) {
+			throw new Error("Código não encontrado!");
+		}
+		return sucesso;
 	}
-	public void limpaDados(int codigo) {
+	public void limpaDados() {
 		animalDAO.limpaDados();
 	}
 	public Animal getAnimal(int codigo) {

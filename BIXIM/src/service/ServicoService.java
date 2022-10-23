@@ -8,23 +8,44 @@ public class ServicoService {
 	private ServicoDAO servicoDAO;
 	
 	public ServicoService() {
-		
+		servicoDAO = new ServicoDAO();
 	}
 	
 	public boolean inserir(Servico servico) {
-		return servicoDAO.inserir(servico);
+		if(this.getServico(servico.getCodigo()) != null) {
+			throw new Error("Código existente!");
+		}
+		boolean sucesso = servicoDAO.inserir(servico);
+		
+		if(sucesso == false) {
+			throw new Error("Não há espaço suficiente!");
+		}
+		return sucesso;
 	}
 	
 	public boolean alterar(int codigo, Servico servico) {
-		return servicoDAO.alterar(codigo, servico);
+		if(this.getServico(servico.getCodigo()) != null) {
+			throw new Error("Código existente!");
+		}
+		boolean sucesso = servicoDAO.alterar(codigo, servico);
+		
+		if(sucesso == false) {
+			throw new Error("Código não encontrado!");
+		}
+		return sucesso;
 	}
 	
 	public boolean remover(int codigo) {
-		return servicoDAO.remover(codigo);
+		boolean sucesso = servicoDAO.remover(codigo);
+		
+		if(sucesso == false) {
+			throw new Error("Código não encontrado!");
+		}
+		return sucesso;
 	}
 	
 	public void limpaDados() {
-		
+		servicoDAO.limpaDados();
 	}
 	
 	public Servico getServico(int codigo) {

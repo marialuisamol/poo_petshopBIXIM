@@ -18,6 +18,7 @@ public class AtendimentoDAO {
 		while (i < atendimentos.length) {
 			
 			if(atendimentos[i] == null) {
+				atendimento.setCodigo(i + 100);
 				atendimentos[i] = atendimento;
 				return true;
 			}
@@ -29,7 +30,7 @@ public class AtendimentoDAO {
 	public boolean alterar(int codigo, Atendimento atendimento) {
 		
 		for(int i = 0; i < atendimentos.length; i++) {
-			if (atendimentos[i].getCodigo() == codigo) {
+			if (atendimentos[i] != null && atendimentos[i].getCodigo() == codigo) {
 				
 				atendimentos[i] = atendimento;
 				return true;
@@ -41,7 +42,7 @@ public class AtendimentoDAO {
 	public boolean remover(int codigo) {
 		
 		for(int i = 0; i < atendimentos.length; i++) {
-			if (atendimentos[i].getCodigo() == codigo) {
+			if (atendimentos[i] != null && atendimentos[i].getCodigo() == codigo) {
 				
 				atendimentos[i] = null;
 				return true;
@@ -59,7 +60,7 @@ public class AtendimentoDAO {
 	public Atendimento getAtendimento(int codigo) {
 		
 		for (int i = 0; i < atendimentos.length; i++) {
-			if(atendimentos[i].getCodigo() == codigo) {
+			if(atendimentos[i] != null && atendimentos[i].getCodigo() == codigo) {
 				return atendimentos[i];
 			}
 		}

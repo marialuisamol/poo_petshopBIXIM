@@ -74,98 +74,86 @@ public class Principal {
 							 		 + "# Digite zero para voltar ao menu anterior              #\n"
 							 		 + "#########################################################\n");
 					op1 = Util.leInteiro();
-					
-					switch(op1) {
-					
-					case 1: {
-						Animal animal = new Animal();
-						System.out.println("#########################################################\n"
-										 + "#                   CADASTRO DE ANIMAL                  #\n"
-										 + "# Código do animal: ");
-						animal.setCodigo(Util.leInteiro());
+					try {
+						switch(op1) {
 						
-						System.out.println("# Nome do animal");
-						animal.setNome(Util.leString());
-						
-						System.out.println("# Endereço do animal: ");
-						animal.setEndereco(Util.leString());
-						
-						System.out.println("# Cidade do animal: ");
-						animal.setCidade(Util.leString());
-						
-						boolean sucesso = animalService.inserir(animal);
-						
-						if (sucesso == false) {
-							System.out.println("# Não existe espaço suficiente.                         #");
-						}
-						else {
+						case 1: {
+							Animal animal = new Animal();
+							System.out.println("#########################################################\n"
+											 + "#                   CADASTRO DE ANIMAL                  #\n"
+											 + "# Código do animal: ");
+							animal.setCodigo(Util.leInteiro());
+							
+							System.out.println("# Nome do animal");
+							animal.setNome(Util.leString());
+							
+							System.out.println("# Endereço do animal: ");
+							animal.setEndereco(Util.leString());
+							
+							System.out.println("# Cidade do animal: ");
+							animal.setCidade(Util.leString());
+							
+							animalService.inserir(animal);
 							System.out.println("# Dados inseridos com sucesso!                          #");
-						}
+							
+							break;
+							
+						}//case 1
 						
-						break;
+						case 2: {
+							Animal animal = new Animal();
+							System.out.println("#########################################################\n"
+											 + "#                     DELETAR ANIMAL                    #\n"
+											 + "# Código do animal: ");
+							animal.setCodigo(Util.leInteiro());
+							
+							animalService.remover(animal.getCodigo());
+							
+							System.out.println("# Dados deletados com sucesso!                          #");
+							
+							break;
+						}//case 2
 						
-					}//case 1
-					
-					case 2: {
-						Animal animal = new Animal();
-						System.out.println("#########################################################\n"
-										 + "#                     DELETAR ANIMAL                    #\n"
-										 + "# Código do animal: ");
-						animal.setCodigo(Util.leInteiro());
-						
-						boolean sucesso = animalService.remover(animal.getCodigo());
-						
-						if (sucesso == false) {
-							System.out.println("# Código não encontrado.                                #");
-						}
-						else {
-							System.out.println("# Dados excluído com sucesso!                           #");
-						}
-						
-						break;
-					}//case 2
-					
-					case 3: {
-						Animal animal = new Animal();
-						System.out.println("#########################################################\n"
-										 + "#                     ALTERAR ANIMAL                    #\n"
-										 + "# Código do animal: ");
-						animal.setCodigo(Util.leInteiro());
-						
-						System.out.println("#########################################################\n"
-										 + "#                       NOVOS DADOS                     #\n");
-						
-						System.out.println("# Nome do animal");
-						animal.setNome(Util.leString());
-						
-						System.out.println("# Endereço do animal: ");
-						animal.setEndereco(Util.leString());
-						
-						System.out.println("# Cidade do animal: ");
-						animal.setCidade(Util.leString());
-								
-						boolean sucesso = animalService.alterar(animal.getCodigo(), animal);
-						
-						if (sucesso == false) {
-							System.out.println("# Código não encontrado.                                #");
-						}
-						else {
+						case 3: {
+							Animal animal = new Animal();
+							System.out.println("#########################################################\n"
+											 + "#                     ALTERAR ANIMAL                    #\n"
+											 + "# Código do animal: ");
+							animal.setCodigo(Util.leInteiro());
+							
+							System.out.println("#########################################################\n"
+											 + "#                       NOVOS DADOS                     #\n");
+							
+							System.out.println("# Nome do animal");
+							animal.setNome(Util.leString());
+							
+							System.out.println("# Endereço do animal: ");
+							animal.setEndereco(Util.leString());
+							
+							System.out.println("# Cidade do animal: ");
+							animal.setCidade(Util.leString());
+									
+							animalService.alterar(animal.getCodigo(), animal);
+							
+							
 							System.out.println("# Dados alterados com sucesso!                          #");
+							
+							
+							break;
 						}
 						
-						break;
+						case 0: {
+							break;
+						}//case 0
+						
+						default:
+							throw new IllegalArgumentException("# Opção Inválida!                                       #\n"
+															 + "#########################################################");
+						}//default
+						//FIM MENU ANIMAL
+					} catch (Error e) {
+						System.out.println("# " +e.getMessage());
 					}
-					
-					case 0: {
-						break;
-					}//case 0
-					
-					default:
-						throw new IllegalArgumentException("# Opção Inválida!                                       #\n"
-														 + "#########################################################");
-					}//default
-					//FIM MENU ANIMAL
-					
 				}while(op1 != 0);
 				break;
 			}//case 1
@@ -184,146 +172,137 @@ public class Principal {
 							 		 + "#########################################################\n");
 					op2 = Util.leInteiro();
 					
-					switch(op2) {
-					
-					case 1: {
-						Servico servico = new Servico();
+					try {
+						switch(op2) {
 						
-						System.out.println("#########################################################\n"
-								 + "#                   CADASTRO DE SERVIÇO                 #\n"
-								 + "# Código do serviço: ");
-						
-						servico.setCodigo(Util.leInteiro());
-						
-						System.out.println("# Descrição do serviço: ");
-						servico.setNome(Util.leString());
-						
-						System.out.println("# Valor do serviço: ");
-						servico.setValor(Util.leFloat());
-						
-						boolean sucesso = servicoService.inserir(servico);
-						
-						if(sucesso == false) {
-							System.out.println("# Não existe espaço suficiente.                         #");
-						}
-						else {
+						case 1: {
+							Servico servico = new Servico();
+							
+							System.out.println("#########################################################\n"
+									 + "#                   CADASTRO DE SERVIÇO                 #\n"
+									 + "# Código do serviço: ");
+							
+							servico.setCodigo(Util.leInteiro());
+							
+							System.out.println("# Descrição do serviço: ");
+							servico.setNome(Util.leString());
+							
+							System.out.println("# Valor do serviço: ");
+							servico.setValor(Util.leFloat());
+							
+							servicoService.inserir(servico);
+							
 							System.out.println("# Dados inseridos com sucesso!                          #");
-						}
+							
+							
+							break;
+						}//case 1
 						
-						break;
-					}//case 1
-					
-					case 2:{
-						
-						Servico servico = new Servico();
-						System.out.println("#########################################################\n"
-										 + "#                    DELETAR SERVIÇO                    #\n"
-										 + "# Código do serviço: ");
-						servico.setCodigo(Util.leInteiro());
-						
-						boolean sucesso = servicoService.remover(servico.getCodigo());
-						
-						if (sucesso == false) {
-							System.out.println("# Código não encontrado.                                #");
-						}
-						else {
+						case 2:{
+							
+							Servico servico = new Servico();
+							System.out.println("#########################################################\n"
+											 + "#                    DELETAR SERVIÇO                    #\n"
+											 + "# Código do serviço: ");
+							servico.setCodigo(Util.leInteiro());
+							
+							servicoService.remover(servico.getCodigo());
+							
 							System.out.println("# Dados excluído com sucesso!                           #");
+							
+							
+							break;
+						}//case 2
+						
+						case 3:{
+							
+							Servico servico = new Servico();
+							System.out.println("#########################################################\n"
+											 + "#                    ALTERAR SERVIÇO                    #\n"
+											 + "# Código do serviço: ");
+							servico.setCodigo(Util.leInteiro());
+							
+							System.out.println("#########################################################\n"
+									 		 + "#                       NOVOS DADOS                     #\n");
+							
+							System.out.println("# Descrição do serviço: ");
+							servico.setNome(Util.leString());
+							
+							System.out.println("# Valor do serviço: ");
+							servico.setValor(Util.leFloat());
+							
+							servicoService.remover(servico.getCodigo());
+							
+							System.out.println("# Dados alterados com sucesso!                          #");
+							
+							
+							break;
 						}
 						
-						break;
-					}//case 2
-					
-					case 3:{
+						case 0: {
+							break;
+						}//case 0
 						
-						Servico servico = new Servico();
-						System.out.println("#########################################################\n"
-										 + "#                    ALTERAR SERVIÇO                    #\n"
-										 + "# Código do serviço: ");
-						servico.setCodigo(Util.leInteiro());
-						
-						System.out.println("#########################################################\n"
-								 		 + "#                       NOVOS DADOS                     #\n");
-						
-						System.out.println("# Descrição do serviço: ");
-						servico.setNome(Util.leString());
-						
-						System.out.println("# Valor do serviço: ");
-						servico.setValor(Util.leFloat());
-						
-						boolean sucesso = servicoService.remover(servico.getCodigo());
-						
-						if (sucesso == false) {
-							System.out.println("# Código não encontrado.                                #");
-						}
-						else {
-							System.out.println("# Dados excluído com sucesso!                           #");
-						}
-						
-						break;
+						default:
+							throw new IllegalArgumentException("# Opção Inválida!                                       #\n"
+															 + "#########################################################");
+						}//default
+						//FIM MENU SERVIÇO
 					}
-					
-					case 0: {
-						break;
-					}//case 0
-					
-					default:
-						throw new IllegalArgumentException("# Opção Inválida!                                       #\n"
-														 + "#########################################################");
-					}//default
-					//FIM MENU SERVIÇO
+					catch (Error e){
+						System.out.println("# " + e.getMessage());
+					}
 					
 				}while(op2 != 0);
 				break;
 			}//case 2
 			
 			case 3: {
-				
-				Atendimento atendimento = new Atendimento();
-				
-				System.out.println("#########################################################\n"
-								 + "#               LANÇAMENTO DE ATENDIMENTOS              #\n");
-				while(true) {
-					System.out.println("# Código do animal: ");
-					int codigo = Util.leInteiro();
+				try {
+					Atendimento atendimento = new Atendimento();
 					
-					Animal animal = animalService.getAnimal(codigo);
+					System.out.println("#########################################################\n"
+									 + "#               LANÇAMENTO DE ATENDIMENTOS              #\n");
+					while(true) {
+						System.out.println("# Código do animal: ");
+						int codigo = Util.leInteiro();
+						
+						Animal animal = animalService.getAnimal(codigo);
+						
+						if(animal != null) {
+							atendimento.setAnimal(animal);
+							break;
+						}
+						else {
+							System.out.println("# Animal não encontrado. Tente novamente!               #");
+						}
+					}
 					
-					if(animal != null) {
-						atendimento.setAnimal(animal);
-						break;
+					while(true) {
+						System.out.println("# Código do serviço: ");
+						int codigo = Util.leInteiro();
+						
+						Servico servico = servicoService.getServico(codigo);
+						
+						if(servico != null) {
+							atendimento.setServico(servico);
+							break;
+						}
+						else {
+							System.out.println("# Serviço não encontrado. Tente novamente!              #");
+						}
 					}
-					else {
-						System.out.println("# Animal não encontrado. Tente novamente!               #");
-					}
-				}
-				
-				while(true) {
-					System.out.println("# Código do serviço: ");
-					int codigo = Util.leInteiro();
 					
-					Servico servico = servicoService.getServico(codigo);
+					System.out.println("# Data do atendimento: ");
+					atendimento.setDate(Util.leData());
 					
-					if(servico != null) {
-						atendimento.setServico(servico);
-						break;
-					}
-					else {
-						System.out.println("# Serviço não encontrado. Tente novamente!              #");
-					}
-				}
-				
-				System.out.println("# Data do atendimento: ");
-				atendimento.setDate(Util.leData());
-				
-				boolean sucesso = atendimentoService.inserir(atendimento);
-				
-				if(sucesso == false) {
-					System.out.println("# Não existe espaço suficiente!                         #");
-				}
-				else {
+					atendimentoService.inserir(atendimento);
+					
 					System.out.println("# Dados inseridos com sucesso!                          #");
 				}
-				
+				catch (Error e){
+					System.out.println("# " + e.getMessage());
+				}
 				break;
 			}//case 3
 			
@@ -331,12 +310,23 @@ public class Principal {
 				System.out.println("#########################################################\n"
 								 + "#                LISTAR DADOS DOS ANIMAIS               #\n");
 				
-				Animal[] lista = BancoDeDados.getAnimais();
-				for(int i = 0; i < lista.length; i++) {
-					if (lista[i] == null) {
-						continue;
-				  }
-					System.out.println(lista[i]);
+				System.out.println("# Deseja realmente imprimir o relatório? (s/n)          #\n");
+				char carac = Util.leChar();
+				
+				if(carac == 'n' || carac == 'N') {
+					break;
+				}
+				else if(carac == 's' || carac == 'S') {
+					Animal[] lista = BancoDeDados.getAnimais();
+					for(int i = 0; i < lista.length; i++) {
+						if (lista[i] == null) {
+							continue;
+						}
+						System.out.println(lista[i]);
+					}
+				}
+				else {
+					System.out.println("# Caractere inválido!                                   #\n");
 				}
 				
 				break;
@@ -346,13 +336,24 @@ public class Principal {
 				System.out.println("#########################################################\n"
 								 + "#                LISTAR DADOS DOS SERVIÇOS              #\n");
 				
-				Servico[] lista = BancoDeDados.getServicos();
-				for(int i = 0; i < lista.length; i++) {
-				  if (lista[i] == null) {
-				    continue;
-				  }
+				System.out.println("# Deseja realmente imprimir o relatório? (s/n)          #\n");
+				char carac = Util.leChar();
+				
+				if(carac == 'n' || carac == 'N') {
+					break;
+				}
+				else if(carac == 's' || carac == 'S') {
+					Servico[] lista = BancoDeDados.getServicos();
+					for(int i = 0; i < lista.length; i++) {
+					  if (lista[i] == null) {
+					    continue;
+					  }
 
-				  System.out.println(lista[i]);
+					  System.out.println(lista[i]);
+					}
+				}
+				else {
+					System.out.println("# Caractere inválido!                                   #\n");
 				}
 				break;
 			}//case 5
@@ -361,13 +362,24 @@ public class Principal {
 				System.out.println("#########################################################\n"
 								 + "#           LISTAR ATENDIMENTOS CADASTRADOS             #\n");
 				
-				Atendimento[] lista = BancoDeDados.getAtendimentos();
-				for(int i = 0; i < lista.length; i++) {
-				  if (lista[i] == null) {
-				    continue;
-				  }
+				System.out.println("# Deseja realmente imprimir o relatório? (s/n)          #\n");
+				char carac = Util.leChar();
+				
+				if(carac == 'n' || carac == 'N') {
+					break;
+				}
+				else if(carac == 's' || carac == 'S') {
+					Atendimento[] lista = BancoDeDados.getAtendimentos();
+					for(int i = 0; i < lista.length; i++) {
+					  if (lista[i] == null) {
+					    continue;
+					  }
 
-				  System.out.println(lista[i]);
+					  System.out.println(lista[i]);
+					}
+				}
+				else {
+					System.out.println("# Caractere inválido!                                   #\n");
 				}
 				
 				break;
@@ -376,6 +388,18 @@ public class Principal {
 			case 7:{
 				System.out.println("#########################################################\n"
 								 + "#                   EMITIR NOTA FISCAL                  #\n");
+				System.out.println("# Deseja realmente imprimir o relatório? (s/n)          #\n");
+				char carac = Util.leChar();
+				
+				if(carac == 'n' || carac == 'N') {
+					break;
+				}
+				else if(carac == 's' || carac == 'S') {
+					
+				}
+				else {
+					System.out.println("# Caractere inválido!                                   #\n");
+				}
 				
 				break;
 			}//case 7
@@ -383,6 +407,21 @@ public class Principal {
 			case 8: {
 				System.out.println("#########################################################\n"
 								 + "#                 LIMPAR BANCO DE DADOS                 #\n");
+				System.out.println("# Deseja realmente imprimir o relatório? (s/n)          #\n");
+				char carac = Util.leChar();
+				
+				if(carac == 'n' || carac == 'N') {
+					break;
+				}
+				else if(carac == 's' || carac == 'S') {
+					
+					animalService.limpaDados();
+					servicoService.limpaDados();
+					atendimentoService.limpaDados();
+				}
+				else {
+					System.out.println("# Caractere inválido!                                   #\n");
+				}
 				
 				break;
 			}//case 8

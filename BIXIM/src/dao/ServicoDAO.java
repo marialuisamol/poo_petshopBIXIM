@@ -27,7 +27,7 @@ public class ServicoDAO {
 	public boolean alterar(int codigo, Servico servico) {
 		
 		for(int i = 0; i < servicos.length; i++) {
-			if (servicos[i].getCodigo() == codigo) {
+			if (servicos[i] != null && servicos[i].getCodigo() == codigo) {
 				
 				servicos[i] = servico;
 				return true;
@@ -39,7 +39,7 @@ public class ServicoDAO {
 	public boolean remover(int codigo) {
 		
 		for(int i = 0; i < servicos.length; i++) {
-			if (servicos[i].getCodigo() == codigo) {
+			if (servicos[i] != null && servicos[i].getCodigo() == codigo) {
 				
 				servicos[i] = null;
 				return true;
@@ -56,7 +56,7 @@ public class ServicoDAO {
 	public Servico getServico(int codigo) {
 
 		for(int i = 0; i < servicos.length; i++) {
-			if(servicos[i].getCodigo() == codigo) {
+			if(servicos[i] != null && servicos[i].getCodigo() == codigo) {
 				
 				return servicos[i];
 			}
