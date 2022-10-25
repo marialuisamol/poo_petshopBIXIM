@@ -9,6 +9,7 @@ import service.AtendimentoService;
 import service.ServicoService;
 import util.Login;
 import util.Util;
+import java.util.Date;
 
 
 public class Principal {
@@ -45,18 +46,19 @@ public class Principal {
 			
 			System.out.println("#########################################################\n"
 							 + "#                      MENU DE OPÇÕES                   #\n"
-							 + "# 1- Cadastro de animal                                 #\n"
-							 + "# 2- Cadastro de serviços                               #\n"
-							 + "# 3- Lançamento de atendimentos                         #\n"
-							 + "# 4- Listar dados dos animais                           #\n"
-							 + "# 5- Listar dados dos serviços                          #\n"
-							 + "# 6- Listar atendimentos cadastrados                    #\n"
-							 + "# 7- Emitir nota fiscal                                 #\n"
-							 + "# 8- Limpar banco de dados                              #\n"
-							 + "# 9- Relatório - Maior valor do atendimento do animal   #\n"
-							 + "# 10- Relatório - Menor valor do atendimento do animal  #\n"
-							 + "# 11- Relatório - Totalizar os atendimentos do animal   #\n"
-							 + "# Digite zero para terminar                             #\n"
+							 + "# 1- Cadastro de animal.                                #\n"
+							 + "# 2- Cadastro de serviços.                              #\n"
+							 + "# 3- Lançamento de atendimentos.                        #\n"
+							 + "# 4- Listar dados dos animais.                          #\n"
+							 + "# 5- Listar dados dos serviços.                         #\n"
+							 + "# 6- Listar atendimentos cadastrados.                   #\n"
+							 + "# 7- Emitir nota fiscal.                                #\n"
+							 + "# 8- Limpar banco de dados.                             #\n"
+							 + "# 9- Relatório - Maior valor do atendimento do animal.  #\n"
+							 + "# 10- Relatório - Menor valor do atendimento do animal. #\n"
+							 + "# 11- Relatório - Totalizar os atendimentos do animal.  #\n"
+							 + "# 12- Relatório - Atendimento entre um período.         #\n"
+							 + "# Digite zero para terminar.                            #\n"
 							 + "#########################################################\n");
 			
 			op = Util.leInteiro();
@@ -68,10 +70,10 @@ public class Principal {
 					System.out.println("#########################################################\n"
 									 + "#                   CADASTRO DE ANIMAL                  #\n"
 									 + "#                MENU DE OPÇÕES DO ANIMAL               #\n"
-							 		 + "# 1- Inserir animal                                     #\n"
-							 		 + "# 2- Deletar animal                                     #\n"
-							 		 + "# 3- Alterar animal                                     #\n"
-							 		 + "# Digite zero para voltar ao menu anterior              #\n"
+							 		 + "# 1- Inserir animal.                                    #\n"
+							 		 + "# 2- Deletar animal.                                    #\n"
+							 		 + "# 3- Alterar animal.                                    #\n"
+							 		 + "# Digite zero para voltar ao menu anterior.             #\n"
 							 		 + "#########################################################\n");
 					op1 = Util.leInteiro();
 					try {
@@ -165,10 +167,10 @@ public class Principal {
 					System.out.println("#########################################################\n"
 									 + "#                   CADASTRO DE SERVIÇO                 #\n"
 									 + "#                MENU DE OPÇÕES DE SERVIÇO              #\n"
-							 		 + "# 1- Inserir serviço                                    #\n"
-							 		 + "# 2- Deletar serviço                                    #\n"
-							 		 + "# 3- Alterar serviço                                    #\n"
-							 		 + "# Digite zero para voltar ao menu anterior              #\n"
+							 		 + "# 1- Inserir serviço.                                   #\n"
+							 		 + "# 2- Deletar serviço.                                   #\n"
+							 		 + "# 3- Alterar serviço.                                   #\n"
+							 		 + "# Digite zero para voltar ao menu anterior.             #\n"
 							 		 + "#########################################################\n");
 					op2 = Util.leInteiro();
 					
@@ -437,24 +439,120 @@ public class Principal {
 			case 9: {
 				System.out.println("#########################################################\n"
 								 + "#    RELATÓRIO - MAIOR VALOR DO ATENDIMENTO DO ANIMAL   #\n");
-				
+				System.out.println("Insira o código do animal: "); 
+				int codigo = Util.leInteiro(); 
+				boolean encontrou = false;    
+				Animal[] animais = BancoDeDados.getAnimais(); 
+				for (int i=0;i<animais.length;i++) { 
+					if(animais[i]!=null) {       
+						if(animais[i].getCodigo() == codigo) encontrou = true;       	
+					}	
+				}     
+				if(encontrou) { 
+					Atendimento[] atendimentos = BancoDeDados.getAtendimentos();
+					float temp = 0;
+					String Stemp = "";
+					for(int i=0;i<atendimentos.length;i++) {
+						if(atendimentos[i]!=null) {
+							if(atendimentos[i].getAnimal().getCodigo() == codigo) {
+								if(atendimentos[i].getServico().getValor() >=temp) {
+									temp = atendimentos[i].getServico().getValor();
+									Stemp = atendimentos[i].getServico().getNome();
+								}
+							}
+						}
+					}
+					if(temp == 0) System.out.println("Não existe atendimento!");
+					else System.out.printf("\nRelatório - ATENDIMENTO DE MAIOR VALOR: "+Stemp+" Valor: "+temp+"\n");                      
+				}else System.out.println("Código não encontrado!");
 				break;
 			}//case 9
 			
 			case 10: {
 				System.out.println("#########################################################\n"
 								 + "#    RELATÓRIO - MENOR VALOR DO ATENDIMENTO DO ANIMAL   #\n");
-				
+				System.out.println("Insira o código do animal: "); 
+				int codigo = Util.leInteiro(); 
+				boolean encontrou = false;    
+				Animal[] animais = BancoDeDados.getAnimais(); 
+				for (int i=0;i<animais.length;i++) { 
+					if(animais[i]!=null) {       
+						if(animais[i].getCodigo() == codigo) encontrou = true;       	
+					}	
+				}     
+				if(encontrou) { 
+					Atendimento[] atendimentos = BancoDeDados.getAtendimentos();
+					float temp = 0;
+					String Stemp = "";
+					for(int i=0;i<atendimentos.length;i++) {
+						if(atendimentos[i]!=null) {
+							if(atendimentos[i].getAnimal().getCodigo() == codigo) {
+								if(atendimentos[0].getServico().getValor()>0) temp = atendimentos[0].getServico().getValor();
+								if(atendimentos[i].getServico().getValor() <= temp) {
+									temp = atendimentos[i].getServico().getValor();
+									Stemp = atendimentos[i].getServico().getNome();
+								}
+							}
+						}
+					}
+					if(temp == 0) System.out.println("Não existe atendimento!");
+					else System.out.printf("\nRelatório - ATENDIMENTO DE MENOR VALOR: "+Stemp+" Valor: "+temp+"\n");                      
+				}else System.out.println("Código não encontrado!");
 				break;
 			}//case 10
 			
 			case 11: {
 				System.out.println("#########################################################\n"
 								 + "#    RELATÓRIO - TOTALIZAR OS ATENDIMENTOS DO ANIMAL    #\n");
-				
+				System.out.println("Insira o código do animal: "); 
+				int codigo = Util.leInteiro(); 
+				boolean encontrou = false;    
+				Animal[] animais = BancoDeDados.getAnimais(); 
+				for (int i=0;i<animais.length;i++) { 
+					if(animais[i]!=null) {       
+						if(animais[i].getCodigo() == codigo) encontrou = true;       	
+					}	
+				}     
+				if(encontrou) { 
+					Atendimento[] atendimentos = BancoDeDados.getAtendimentos();
+					float temp = 0;
+					for(int i=0;i<atendimentos.length;i++) {
+						if(atendimentos[i]!=null) {
+							if(atendimentos[i].getAnimal().getCodigo() == codigo) {
+								if(atendimentos[i].getServico().getValor() > 0) {
+									temp += atendimentos[i].getServico().getValor();
+								}
+							}
+						}
+					}
+					if(temp == 0) System.out.println("Não existe atendimento!");
+					else System.out.printf("\nRelatório - O TOTAL DOS ATENDIMENTOS DO ANIMAL É: "+temp+"\n");                      
+				}else System.out.println("Código não encontrado!");
 				break;
 			}//case 11
-			
+			case 12:
+				System.out.println("#########################################################\n"
+						 		 + "#    RELATÓRIO - ATENDIMENTO ENTRE UM PERÍODO           #\n");
+				System.out.println("Insira a data incial (AA-MM-DD): ");
+				Date data1 = Util.leData();
+				System.out.println("Insira a data final (AA-MM-DD): ");
+				Date data2 = Util.leData();
+				Atendimento[] atendimentos = BancoDeDados.getAtendimentos();
+				boolean exist = false;
+				System.out.println("RELATÓRIO - ATENDIMENTOS NO PERÍODO: ");
+				for(int i=0;i<atendimentos.length;i++) {
+					if(atendimentos[i]!=null) {
+						if(atendimentos[i].getDate().after(data1) && atendimentos[i].getDate().before(data2)){			
+							System.out.printf("Atendimento: "+atendimentos[i].getCodigo()
+									+" "+atendimentos[i].getAnimal().getNome()
+									+" - "+atendimentos[i].getServico().getNome()
+									+" R$"+atendimentos[i].getServico().getValor()+"\n");
+							exist = true;
+						}
+					}
+				}
+				if(!exist) System.out.println("Não há atendimentos na data informada.");
+				break;
 			case 0: {
 				System.exit(0);
 				break;
