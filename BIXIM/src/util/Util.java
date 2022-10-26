@@ -79,8 +79,8 @@ public class Util {
 		Scanner entrada;
 		Date valor = null;
 		boolean erro = true;
-		//TODO: TROCAR A DATA
-		DateFormat df = DateFormat.getDateInstance(DateFormat.SHORT, Locale.CANADA);
+		
+		DateFormat df = DateFormat.getDateInstance();
 		while (erro) {
 			try {
 				entrada = new Scanner(System.in);
