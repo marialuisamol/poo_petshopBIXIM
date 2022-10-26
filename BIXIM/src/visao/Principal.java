@@ -446,7 +446,7 @@ public class Principal {
 					Atendimento atendimento = atendimentoService.getMaiorAtendimento(codigo);
 					System.out.print(String.format("# Maior valor de atendimento:                           #\n"
 									 + "# Serviço: %s\n"
-									 + "# Valor: R$%.2f\n", atendimento.getServico(), atendimento.getServico().getValor()));
+									 + "# Valor: R$%.2f\n", atendimento.getServico().getNome(), atendimento.getServico().getValor()));
 				}
 				catch(Error e){
 					System.err.println("# " + e.getMessage());
@@ -466,7 +466,7 @@ public class Principal {
 					Atendimento atendimento = atendimentoService.getMenorAtendimento(codigo);
 					System.out.println(String.format("# Menor valor de atendimento:                           #\n"
 									 + "# Serviço: %s\n"
-									 + "# Valor: R$%.2f\n", atendimento.getServico(), atendimento.getServico().getValor()));
+									 + "# Valor: R$%.2f\n", atendimento.getServico().getNome(), atendimento.getServico().getValor()));
 				}
 				catch(Error e){
 					System.err.println("# " + e.getMessage());
@@ -494,9 +494,9 @@ public class Principal {
 			case 12:
 				System.out.println("#########################################################\n"
 						 		 + "#    RELATÓRIO - ATENDIMENTO ENTRE UM PERÍODO           #\n");
-				System.out.println("# Insira a data incial (AA-MM-DD): ");
+				System.out.println("# Insira a data incial: ");
 				Date data1 = Util.leData();
-				System.out.println("# Insira a data final (AA-MM-DD): ");
+				System.out.println("# Insira a data final: ");
 				Date data2 = Util.leData();
 				System.out.println("# RELATÓRIO - ATENDIMENTOS NO PERÍODO: ");
 
