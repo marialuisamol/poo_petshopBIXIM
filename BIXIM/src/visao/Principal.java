@@ -147,12 +147,12 @@ public class Principal {
 						}//case 0
 						
 						default:
-							throw new IllegalArgumentException("\n# Opção Inválida!                                       #\n"
-															 + "#########################################################");
+							System.err.println("\n# Opção Inválida!                                       #\n"
+											 + "#########################################################");
 						}//default
 						//FIM MENU ANIMAL
 					} catch (Error e) {
-						System.out.println("# " +e.getMessage());
+						System.err.println("# " +e.getMessage());
 					}
 				}while(op1 != 0);
 				break;
@@ -244,13 +244,13 @@ public class Principal {
 						}//case 0
 						
 						default:
-							throw new IllegalArgumentException("\n# Opção Inválida!                                       #\n"
-															 + "#########################################################");
+							System.err.println("\n# Opção Inválida!                                       #\n"
+											   + "#########################################################");
 						}//default
 						//FIM MENU SERVIÇO
 					}
 					catch (Error e){
-						System.out.println("# " + e.getMessage());
+						System.err.println("# " + e.getMessage());
 					}
 					
 				}while(op2 != 0);
@@ -274,7 +274,7 @@ public class Principal {
 							break;
 						}
 						else {
-							System.out.println("# Animal não encontrado. Tente novamente!               #");
+							System.err.println("# Animal não encontrado. Tente novamente!               #");
 						}
 					}
 					
@@ -289,7 +289,7 @@ public class Principal {
 							break;
 						}
 						else {
-							System.out.println("# Serviço não encontrado. Tente novamente!              #");
+							System.err.println("# Serviço não encontrado. Tente novamente!              #");
 						}
 					}
 					
@@ -301,7 +301,7 @@ public class Principal {
 					System.out.println("# Dados inseridos com sucesso!                          #");
 				}
 				catch (Error e){
-					System.out.println("# " + e.getMessage());
+					System.err.println("# " + e.getMessage());
 				}
 				break;
 			}//case 3
@@ -326,7 +326,7 @@ public class Principal {
 					}
 				}
 				else {
-					System.out.println("# Caractere inválido!                                   #\n");
+					System.err.println("# Caractere inválido!                                   #\n");
 				}
 				
 				break;
@@ -353,7 +353,7 @@ public class Principal {
 					}
 				}
 				else {
-					System.out.println("# Caractere inválido!                                   #\n");
+					System.err.println("# Caractere inválido!                                   #\n");
 				}
 				break;
 			}//case 5
@@ -379,7 +379,7 @@ public class Principal {
 					}
 				}
 				else {
-					System.out.println("# Caractere inválido!                                   #\n");
+					System.err.println("# Caractere inválido!                                   #\n");
 				}
 				
 				break;
@@ -402,11 +402,11 @@ public class Principal {
 						System.out.println(notaFiscal);
 					}
 					catch (Error e){
-						System.out.println(("# ") + e.getMessage());
+						System.err.println(("# ") + e.getMessage());
 					}
 				}
 				else {
-					System.out.println("# Caractere inválido!                                   #\n");
+					System.err.println("# Caractere inválido!                                   #\n");
 				}
 				
 				break;
@@ -428,7 +428,7 @@ public class Principal {
 					atendimentoService.limpaDados();
 				}
 				else {
-					System.out.println("# Caractere inválido!                                   #\n");
+					System.err.println("# Caractere inválido!                                   #\n");
 				}
 				
 				break;
@@ -461,8 +461,8 @@ public class Principal {
 			}//case 0
 				
 			default:
-				throw new IllegalArgumentException("\n# Opção Inválida!                                       #\n"
-												 + "#########################################################");
+				System.err.println("\n# Opção Inválida!                                       #\n"
+								   + "#########################################################");
 			}//default
 			
 		} while (op != 0);
