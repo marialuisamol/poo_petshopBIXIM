@@ -41,7 +41,12 @@ public class Servico {
 
 	@Override
 	public String toString() {
-		return "Servico [codigo=" + codigo + ", nome=" + nome + ", valor=" + valor + "]";
+		return "#########################################################\n"
+			 + "#                       SERVIÇO                         #\n"
+			 + "# Código:" + codigo +"\n"
+			 + "# Serviço: " + nome + "\n"
+			 + "# Valor: " + valor + "\n"
+			 + "#########################################################";
 	}
 	
 	
