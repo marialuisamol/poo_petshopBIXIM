@@ -441,117 +441,76 @@ public class Principal {
 								 + "#    RELATÓRIO - MAIOR VALOR DO ATENDIMENTO DO ANIMAL   #\n");
 				System.out.println("Insira o código do animal: "); 
 				int codigo = Util.leInteiro(); 
-				boolean encontrou = false;    
-				Animal[] animais = BancoDeDados.getAnimais(); 
-				for (int i=0;i<animais.length;i++) { 
-					if(animais[i]!=null) {       
-						if(animais[i].getCodigo() == codigo) encontrou = true;       	
-					}	
-				}     
-				if(encontrou) { 
-					Atendimento[] atendimentos = BancoDeDados.getAtendimentos();
-					float temp = 0;
-					String Stemp = "";
-					for(int i=0;i<atendimentos.length;i++) {
-						if(atendimentos[i]!=null) {
-							if(atendimentos[i].getAnimal().getCodigo() == codigo) {
-								if(atendimentos[i].getServico().getValor() >=temp) {
-									temp = atendimentos[i].getServico().getValor();
-									Stemp = atendimentos[i].getServico().getNome();
-								}
-							}
-						}
-					}
-					if(temp == 0) System.out.println("Não existe atendimento!");
-					else System.out.printf("\nRelatório - ATENDIMENTO DE MAIOR VALOR: "+Stemp+" Valor: "+temp+"\n");                      
-				}else System.out.println("Código não encontrado!");
+				
+				try{
+					Atendimento atendimento = atendimentoService.getMaiorAtendimento(codigo);
+					System.out.print(String.format("# Maior valor de atendimento:                           #\n"
+									 + "# Serviço: %s\n"
+									 + "# Valor: R$%.2f\n", atendimento.getServico(), atendimento.getServico().getValor()));
+				}
+				catch(Error e){
+					System.err.println("# " + e.getMessage());
+				}
+				
+
 				break;
 			}//case 9
 			
 			case 10: {
 				System.out.println("#########################################################\n"
 								 + "#    RELATÓRIO - MENOR VALOR DO ATENDIMENTO DO ANIMAL   #\n");
-				System.out.println("Insira o código do animal: "); 
+				System.out.println("# Insira o código do animal: "); 
 				int codigo = Util.leInteiro(); 
-				boolean encontrou = false;    
-				Animal[] animais = BancoDeDados.getAnimais(); 
-				for (int i=0;i<animais.length;i++) { 
-					if(animais[i]!=null) {       
-						if(animais[i].getCodigo() == codigo) encontrou = true;       	
-					}	
-				}     
-				if(encontrou) { 
-					Atendimento[] atendimentos = BancoDeDados.getAtendimentos();
-					float temp = 0;
-					String Stemp = "";
-					for(int i=0;i<atendimentos.length;i++) {
-						if(atendimentos[i]!=null) {
-							if(atendimentos[i].getAnimal().getCodigo() == codigo) {
-								if(atendimentos[0].getServico().getValor()>0) temp = atendimentos[0].getServico().getValor();
-								if(atendimentos[i].getServico().getValor() <= temp) {
-									temp = atendimentos[i].getServico().getValor();
-									Stemp = atendimentos[i].getServico().getNome();
-								}
-							}
-						}
-					}
-					if(temp == 0) System.out.println("Não existe atendimento!");
-					else System.out.printf("\nRelatório - ATENDIMENTO DE MENOR VALOR: "+Stemp+" Valor: "+temp+"\n");                      
-				}else System.out.println("Código não encontrado!");
+				
+				try{
+					Atendimento atendimento = atendimentoService.getMenorAtendimento(codigo);
+					System.out.println(String.format("# Menor valor de atendimento:                           #\n"
+									 + "# Serviço: %s\n"
+									 + "# Valor: R$%.2f\n", atendimento.getServico(), atendimento.getServico().getValor()));
+				}
+				catch(Error e){
+					System.err.println("# " + e.getMessage());
+				}
+
 				break;
 			}//case 10
 			
 			case 11: {
 				System.out.println("#########################################################\n"
 								 + "#    RELATÓRIO - TOTALIZAR OS ATENDIMENTOS DO ANIMAL    #\n");
-				System.out.println("Insira o código do animal: "); 
+				System.out.println("# Insira o código do animal: "); 
 				int codigo = Util.leInteiro(); 
-				boolean encontrou = false;    
-				Animal[] animais = BancoDeDados.getAnimais(); 
-				for (int i=0;i<animais.length;i++) { 
-					if(animais[i]!=null) {       
-						if(animais[i].getCodigo() == codigo) encontrou = true;       	
-					}	
-				}     
-				if(encontrou) { 
-					Atendimento[] atendimentos = BancoDeDados.getAtendimentos();
-					float temp = 0;
-					for(int i=0;i<atendimentos.length;i++) {
-						if(atendimentos[i]!=null) {
-							if(atendimentos[i].getAnimal().getCodigo() == codigo) {
-								if(atendimentos[i].getServico().getValor() > 0) {
-									temp += atendimentos[i].getServico().getValor();
-								}
-							}
-						}
-					}
-					if(temp == 0) System.out.println("Não existe atendimento!");
-					else System.out.printf("\nRelatório - O TOTAL DOS ATENDIMENTOS DO ANIMAL É: "+temp+"\n");                      
-				}else System.out.println("Código não encontrado!");
+				
+				try{
+					float total = atendimentoService.getTotalDosAtendimentos(codigo);
+					System.out.println(String.format("# Total dos atendimentos ao animal: R$%.2f", total));
+				}
+				catch(Error e){
+					System.err.println("# " + e.getMessage());
+				}
+
 				break;
 			}//case 11
 			case 12:
 				System.out.println("#########################################################\n"
 						 		 + "#    RELATÓRIO - ATENDIMENTO ENTRE UM PERÍODO           #\n");
-				System.out.println("Insira a data incial (AA-MM-DD): ");
+				System.out.println("# Insira a data incial (AA-MM-DD): ");
 				Date data1 = Util.leData();
-				System.out.println("Insira a data final (AA-MM-DD): ");
+				System.out.println("# Insira a data final (AA-MM-DD): ");
 				Date data2 = Util.leData();
-				Atendimento[] atendimentos = BancoDeDados.getAtendimentos();
-				boolean exist = false;
-				System.out.println("RELATÓRIO - ATENDIMENTOS NO PERÍODO: ");
-				for(int i=0;i<atendimentos.length;i++) {
-					if(atendimentos[i]!=null) {
-						if(atendimentos[i].getDate().after(data1) && atendimentos[i].getDate().before(data2)){			
-							System.out.printf("Atendimento: "+atendimentos[i].getCodigo()
-									+" "+atendimentos[i].getAnimal().getNome()
-									+" - "+atendimentos[i].getServico().getNome()
-									+" R$"+atendimentos[i].getServico().getValor()+"\n");
-							exist = true;
-						}
-					}
+				System.out.println("# RELATÓRIO - ATENDIMENTOS NO PERÍODO: ");
+
+				String inicio = Util.dateParaString(data1);
+				String fim = Util.dateParaString(data2);
+				
+				try{
+					System.out.println(atendimentoService.getAtendimentoPorPeriodo(inicio, fim));
 				}
-				if(!exist) System.out.println("Não há atendimentos na data informada.");
+				
+				catch (Error e) {
+					System.err.println("# " + e.getMessage());
+				}
+
 				break;
 			case 0: {
 				System.exit(0);
