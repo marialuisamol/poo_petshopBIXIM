@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Objects;
+
 public class Servico {
 	private int codigo;
 	private String nome;
@@ -37,6 +39,24 @@ public class Servico {
 
 	public void setValor(float valor) {
 		this.valor = valor;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(codigo, nome, valor);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Servico other = (Servico) obj;
+		return codigo == other.codigo && Objects.equals(nome, other.nome)
+				&& Float.floatToIntBits(valor) == Float.floatToIntBits(other.valor);
 	}
 
 	@Override

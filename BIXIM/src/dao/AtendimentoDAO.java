@@ -1,76 +1,59 @@
 package dao;
 
+import java.util.Iterator;
+import java.util.Set;
+
 import bd.BancoDeDados;
 import model.Atendimento;
 
 public class AtendimentoDAO {
 	
-	private Atendimento[] atendimentos;
+	private Set<Atendimento> atendimentos;
 	
 	public AtendimentoDAO() {
 		atendimentos = BancoDeDados.getAtendimentos();
 	}
 	
 	public boolean inserir(Atendimento atendimento) {
-		
-		int i = 0;
-		
-		while (i < atendimentos.length) {
-			
-			if(atendimentos[i] == null) {
-				atendimento.setCodigo(i + 100);
-				atendimentos[i] = atendimento;
-				return true;
-			}
-			i++;
-		}
-		return false;
+		return atendimentos.add(atendimento);
 	}
 	
 	public boolean alterar(int codigo, Atendimento atendimento) {
-		
-		for(int i = 0; i < atendimentos.length; i++) {
-			if (atendimentos[i] != null && atendimentos[i].getCodigo() == codigo) {
-				
-				atendimentos[i] = atendimento;
-				return true;
-			}
-		}
+        for(Iterator<Atendimento> iter = atendimentos.iterator();iter.hasNext();) {
+            Atendimento atendimentoAtual = iter.next();
+            if(atendimentoAtual.getCodigo() == codigo) {
+            	atendimentoAtual = atendimento;
+            	return true;
+            }
+        }
 		return false;
 	}
 	
 	public boolean remover(int codigo) {
-		
-		for(int i = 0; i < atendimentos.length; i++) {
-			if (atendimentos[i] != null && atendimentos[i].getCodigo() == codigo) {
-				
-				atendimentos[i] = null;
-				return true;
-			}
-		}
+        for(Iterator<Atendimento> iter = atendimentos.iterator();iter.hasNext();) {
+            Atendimento atendimentoAtual = iter.next();
+            if(atendimentoAtual.getCodigo() == codigo) {
+            	return atendimentos.remove(atendimentoAtual);
+            }
+        }
 		return false;
-	
 	}
 	
 	public void limpaDados() {
-		
-		for (int i = 0; i < atendimentos.length; i++) {
-			atendimentos[i] = null;
-		}
+		atendimentos.removeAll(atendimentos);
 	}
 	
 	public Atendimento getAtendimento(int codigo) {
-		
-		for (int i = 0; i < atendimentos.length; i++) {
-			if(atendimentos[i] != null && atendimentos[i].getCodigo() == codigo) {
-				return atendimentos[i];
-			}
-		}
-		
+        for(Iterator<Atendimento> iter = atendimentos.iterator();iter.hasNext();) {
+            Atendimento atendimentoAtual = iter.next();
+            if(atendimentoAtual.getCodigo() == codigo) {
+            	return atendimentoAtual;
+            }
+        }
 		return null;
 	}
 	
-	public Atendimento[] getAll() {
+	public Set<Atendimento> getAll() {
 		return atendimentos;
 	}
 

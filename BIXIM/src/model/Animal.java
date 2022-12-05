@@ -1,6 +1,8 @@
 package model;
 
-public class Animal {
+import java.util.Objects;
+
+public abstract class Animal {
 	
 	private int codigo;
 	private String nome;
@@ -28,6 +30,7 @@ public class Animal {
 		this.cidade = cidade;
 	}
 	
+	public abstract float getTaxa();
 	
 	public String getEndereco() {
 		return endereco;
@@ -51,11 +54,28 @@ public class Animal {
 	public void setCodigo(int codigo) {
 		this.codigo = codigo;
 	}
+	
 	@Override
 	public String toString() {
 		return "\n#########################################################\n"
 		 	 + "#                      DADOS ANIMAL                     #\n"
 			 + "# Código = " + codigo + "\n# Nome = " + nome + "\n# Endereco = " + endereco + "\n# Cidade = " + cidade ;
+	}
+	@Override
+	public int hashCode() {
+		return Objects.hash(cidade, codigo, endereco, nome);
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Animal other = (Animal) obj;
+		return Objects.equals(cidade, other.cidade) && codigo == other.codigo
+				&& Objects.equals(endereco, other.endereco) && Objects.equals(nome, other.nome);
 	}
 	
 	
