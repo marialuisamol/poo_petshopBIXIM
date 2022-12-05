@@ -1,74 +1,60 @@
 package dao;
 
 
+import java.util.Iterator;
+import java.util.Set;
+
 import bd.BancoDeDados;
 import model.Servico;
 
 public class ServicoDAO {
 	
-	private Servico[] servicos;
+	private Set<Servico> servicos;
 	
 	public ServicoDAO() {
 		servicos = BancoDeDados.getServicos();
 	}
 	
 	public boolean inserir(Servico servico) {
-		
-		for(int i = 0; i < servicos.length; i++) {
-			if(servicos[i] == null) {
-				servicos[i] = servico;
-				return true;
-			}
-		}
-		
-		return false;
+		return servicos.add(servico);
 	}
 	
 	public boolean alterar(int codigo, Servico servico) {
-		
-		for(int i = 0; i < servicos.length; i++) {
-			if (servicos[i] != null && servicos[i].getCodigo() == codigo) {
-				
-				servicos[i] = servico;
-				return true;
-			}
-		}
+        for(Iterator<Servico> iter = servicos.iterator();iter.hasNext();) {
+            Servico servicoAtual = iter.next();
+            if(servicoAtual.getCodigo() == codigo) {
+            	servicoAtual = servico;
+            	return true;
+            }
+        }
 		return false;
 	}
 	
 	public boolean remover(int codigo) {
-		
-		for(int i = 0; i < servicos.length; i++) {
-			if (servicos[i] != null && servicos[i].getCodigo() == codigo) {
-				
-				servicos[i] = null;
-				return true;
-			}
-		}
+        for(Iterator<Servico> iter = servicos.iterator();iter.hasNext();) {
+            Servico servicoAtual = iter.next();
+            if(servicoAtual.getCodigo() == codigo) {
+            	return servicos.remove(servicoAtual);
+            }
+        }
 		return false;
-		
 	}
 	
 	public void limpaDados() {
-		for(int i = 0; i < servicos.length; i++) {
-			
-			servicos[i] = null;
-		}
+		servicos.removeAll(servicos);
 	}
 	
 	public Servico getServico(int codigo) {
-
-		for(int i = 0; i < servicos.length; i++) {
-			if(servicos[i] != null && servicos[i].getCodigo() == codigo) {
-				
-				return servicos[i];
-			}
-		}
-		
+        for(Iterator<Servico> iter = servicos.iterator();iter.hasNext();) {
+            Servico servicoAtual = iter.next();
+            if(servicoAtual.getCodigo() == codigo) {
+            	return servicoAtual;
+            }
+        }
 		return null;
 	}
 	
-	public Servico[] getAll() {
+	public Set<Servico> getAll() {
 		return servicos;
 	}
 }

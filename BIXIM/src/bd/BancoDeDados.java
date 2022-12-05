@@ -1,20 +1,23 @@
 package bd;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import model.Animal;
 import model.Atendimento;
 import model.Servico;
 
 public class BancoDeDados {
 	
-	private Animal[] animais;
-	private Servico[] servicos;
-	private Atendimento[] atendimentos;
+	private static Set<Animal> animais;
+	private static Set<Servico> servicos;
+	private static Set<Atendimento> atendimentos;
 	private static BancoDeDados bancoDeDados;
 	
 	private BancoDeDados() {
-		animais = new Animal[10];
-		servicos = new Servico[10];
-		atendimentos = new Atendimento[20];
+		animais = new HashSet<>(); 
+		servicos = new HashSet<>();
+		atendimentos = new HashSet<>();
 	}
 	
 	public static BancoDeDados getInstance() {
@@ -24,17 +27,18 @@ public class BancoDeDados {
 		}
 		return bancoDeDados;
 	}
-	
-	public static Animal[] getAnimais() {
-		
-		return getInstance().animais;
+
+	public static Set<Animal> getAnimais() {
+		return animais;
+	}
+
+	public static Set<Servico> getServicos() {
+		return servicos;
+	}
+
+	public static Set<Atendimento> getAtendimentos() {
+		return atendimentos;
 	}
 	
-	public static Servico[] getServicos() {
-		return getInstance().servicos;
-	}
 	
-	public static Atendimento[] getAtendimentos() {
-		return getInstance().atendimentos;
-	}
 }

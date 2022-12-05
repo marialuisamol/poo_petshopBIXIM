@@ -1,78 +1,59 @@
 package dao;
 
+import java.util.Iterator;
+import java.util.Set;
+
 import bd.BancoDeDados;
 import model.Animal;
 
 public class AnimalDAO {
 	
-	private Animal[] animais;
+	private Set<Animal> animais;
 	
 	public AnimalDAO() {
 		animais = BancoDeDados.getAnimais();
 	}
 	
 	public boolean inserir(Animal animal) {
-		int i = 0;
-		
-		while (i < animais.length) {
-			if(animais[i] == null) {
-				animais[i] = animal;
-				return true;
-			}	
-			
-			i++;			
-		}
-		
-		return false;
+		return animais.add(animal);
 	}
 	
 	public boolean alterar(int codigo, Animal animal) {
-		
-		for(int i = 0; i < animais.length; i++) {
-			if (animais[i] != null && animais[i].getCodigo() == codigo) {
-				
-				animais[i] = animal;
-				return true;
-			}
-		}
+        for(Iterator<Animal> iter = animais.iterator();iter.hasNext();) {
+            Animal animalAtual = iter.next();
+            if(animalAtual.getCodigo() == codigo) {
+            	animalAtual = animal;
+            	return true;
+            }
+        }
 		return false;
-	
 	}
 	
 	public boolean remover(int codigo) {
-		
-		for(int i = 0; i < animais.length; i++) {
-			if (animais[i] != null && animais[i].getCodigo() == codigo) {
-				
-				animais[i] = null;
-				return true;
-			}
-		}
+        for(Iterator<Animal> iter = animais.iterator();iter.hasNext();) {
+            Animal animalAtual = iter.next();
+            if(animalAtual.getCodigo() == codigo) {
+            	return animais.remove(animalAtual);
+            }
+        }
 		return false;
 	}
 	
 	public void limpaDados() {
-		
-		for(int i = 0; i < animais.length; i++) {
-			animais[i] = null;
-		}
-		
+		animais.removeAll(animais);	
 	}
 	
-	public Animal getAnimal(int codigo) {
-		
-		int i = 0;
-		
-		while(i < animais.length) {
-			if(animais[i] != null && codigo == animais[i].getCodigo()) {
-				return animais[i];
-			}
-			i++;
-		}
+	public Animal getAnimal(int codigo) {	
+        for(Iterator<Animal> iter = animais.iterator();iter.hasNext();) {
+            Animal animalAtual = iter.next();
+            if(animalAtual.getCodigo() == codigo) {
+            	return animalAtual;
+            }
+        }
 		return null;		
 	}
 	
-	public Animal[] getAll() {
+	public Set<Animal> getAll() {
 		return animais;
 	}
 

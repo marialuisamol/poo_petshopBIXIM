@@ -3,6 +3,7 @@ package visao;
 import bd.BancoDeDados;
 import model.Animal;
 import model.Atendimento;
+import model.Cachorro;
 import model.Servico;
 import service.AnimalService;
 import service.AtendimentoService;
@@ -80,7 +81,7 @@ public class Principal {
 						switch(op1) {
 						
 						case 1: {
-							Animal animal = new Animal();
+							Animal animal;
 							System.out.println("#########################################################\n"
 											 + "#                   CADASTRO DE ANIMAL                  #\n"
 											 + "# Código do animal: ");
@@ -95,7 +96,31 @@ public class Principal {
 							System.out.println("# Cidade do animal: ");
 							animal.setCidade(Util.leString());
 							
-							animalService.inserir(animal);
+							System.out.println("# Tipo: 1) Cachorro. 2) Gato. ");
+							int tipo = Util.leInteiro();
+							if(tipo == 1) {
+								 System.out.println("# Tem pedigree? (true ou false). ");
+								 // HERE.
+								 Cachorro cachorro = new Cachorro(animal.getCodigo(),
+										 							animal.getNome(),
+										 							animal.getEndereco(),
+										 							animal.getCidade(),
+										 							true);
+							}else if(tipo == 2) {
+								System.out.println("# Tipo documento do dono: 1) CPF.  2) CNPJ. ");
+								tipo = Util.leInteiro();
+								System.out.println("# Número do documento do dono: ");
+								if(tipo == 1) {
+									// CPF.
+								}else if(tipo == 2) {
+									// CNPJ.
+								}
+							}
+							
+							
+							
+							
+							animalService.inserir(animal);  //change all.
 							System.out.println("# Dados inseridos com sucesso!                          #");
 							
 							break;
@@ -103,7 +128,7 @@ public class Principal {
 						}//case 1
 						
 						case 2: {
-							Animal animal = new Animal();
+							Animal animal;
 							System.out.println("#########################################################\n"
 											 + "#                     DELETAR ANIMAL                    #\n"
 											 + "# Código do animal: ");
@@ -117,7 +142,7 @@ public class Principal {
 						}//case 2
 						
 						case 3: {
-							Animal animal = new Animal();
+							Animal animal;
 							System.out.println("#########################################################\n"
 											 + "#                     ALTERAR ANIMAL                    #\n"
 											 + "# Código do animal: ");
@@ -233,7 +258,7 @@ public class Principal {
 							System.out.println("# Valor do serviço: ");
 							servico.setValor(Util.leFloat());
 							
-							servicoService.remover(servico.getCodigo());
+							servicoService.alterar(servico.getCodigo(),servico);
 							
 							System.out.println("# Dados alterados com sucesso!                          #");
 							

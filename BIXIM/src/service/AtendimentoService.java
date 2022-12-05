@@ -1,6 +1,8 @@
 package service;
 
 import java.util.Date;
+import java.util.Iterator;
+import java.util.Set;
 
 import bd.BancoDeDados;
 import dao.AtendimentoDAO;
@@ -21,7 +23,6 @@ public class AtendimentoService {
 	}
 	
 	public boolean inserir(Atendimento atendimento){
-		
 		boolean sucesso = atendimentoDAO.inserir(atendimento);
 		if(sucesso == false) {
 			throw new Error("Não há espaço suficiente!");
@@ -30,7 +31,6 @@ public class AtendimentoService {
 		
 	}
 	public boolean alterar(int codigo, Atendimento atendimento) {
-		
 		boolean sucesso = atendimentoDAO.alterar(codigo, atendimento);
 		if(sucesso == false) {
 			throw new Error("Código não encontrado!");
@@ -38,7 +38,6 @@ public class AtendimentoService {
 		return sucesso;
 	}
 	public boolean remover(int codigo) {
-		
 		boolean sucesso = atendimentoDAO.remover(codigo);
 		if(sucesso == false) {
 			throw new Error("Código não encontrado!");
@@ -65,7 +64,7 @@ public class AtendimentoService {
 			throw new Error("Animal não encontrado!");
 		}
 		
-		Atendimento[] listaAtendimentos = atendimentoDAO.getAll();
+		Set<Atendimento> listaAtendimentos = atendimentoDAO.getAll();
 		
 		float total = 0f;
 		
@@ -80,15 +79,16 @@ public class AtendimentoService {
 										 + "#########################################################\n", 
 										 animal.getNome(), animal.getEndereco(), animal.getCidade());
 		
-		for(int i = 0; i < listaAtendimentos.length; i++) {
-			if(listaAtendimentos[i] == null) {
-				continue;
-			}
-			if(listaAtendimentos[i].getAnimal().getCodigo() == codigo) {
-				notaFiscal +=  String.format("# Serviço: %s\tValor:%.2f\n", listaAtendimentos[i].getServico().getNome(), listaAtendimentos[i].getServico().getValor());
-				total += listaAtendimentos[i].getServico().getValor();
-			}
-		}
+		
+        for(Iterator<Atendimento> iter = listaAtendimentos.iterator();iter.hasNext();) {
+        	Atendimento atendimentoAtual = iter.next();
+            if(atendimentoAtual.getAnimal().getCodigo() == codigo) {
+            	notaFiscal +=  String.format("# Serviço: %s\tValor:%.2f\n", atendimentoAtual.getServico().getNome(),
+            																atendimentoAtual.getServico().getValor());
+            	total += atendimentoAtual.getServico().getValor();
+            }
+        }
+		
 		
 		notaFiscal += String.format("#########################################################\n"
 								   + "# Total:\tR$%.2f\n"
@@ -101,27 +101,28 @@ public class AtendimentoService {
 		
 		Atendimento temp = null;
 		boolean encontrou = false;    
-		Animal[] animais = BancoDeDados.getAnimais(); 
-		for (int i=0;i<animais.length;i++) { 
-			if(animais[i]!=null) {       
-				if(animais[i].getCodigo() == codigo) encontrou = true;       	
-			}	
-		}     
+		Set<Animal> animais = BancoDeDados.getAnimais();
+        for(Iterator<Animal> iter = animais.iterator();iter.hasNext();) {
+        	Animal animalAtual = iter.next();
+            if(animalAtual.getCodigo() == codigo) {
+            	encontrou = true;
+            }
+        }	
+		    
 		if(encontrou) { 
-			Atendimento[] atendimentos = BancoDeDados.getAtendimentos();
+			Set<Atendimento> atendimentos = BancoDeDados.getAtendimentos();		
+	        for(Iterator<Atendimento> iter = atendimentos.iterator();iter.hasNext();) {
+	        	Atendimento atendimentoAtual = iter.next();
+	            if(atendimentoAtual.getAnimal().getCodigo() == codigo) {
+	            	if(temp == null) {
+	            		temp = atendimentoAtual;
+	            	}
+	            	if(atendimentoAtual.getServico().getValor() >= temp.getServico().getValor()) {
+	            		temp = atendimentoAtual;
+	            	}
+	            }
+	        }
 			
-			for (int i=0;i<atendimentos.length;i++) {
-				if (atendimentos[i]!=null) {
-					if (atendimentos[i].getAnimal().getCodigo() == codigo) {
-						if (temp == null){
-							temp = atendimentos[i];
-						}
-						if(atendimentos[i].getServico().getValor() >= temp.getServico().getValor()) {
-							temp = atendimentos[i];
-						}
-					}
-				}
-			}
 		}
 		else{
 			throw new Error("Animal não encontrado!");
@@ -136,29 +137,27 @@ public class AtendimentoService {
 	public Atendimento getMenorAtendimento(int codigo) {
 		boolean encontrou = false; 
 		Atendimento temp = null;   
-		Animal[] animais = BancoDeDados.getAnimais(); 
-		for (int i=0;i<animais.length;i++) { 
-			if(animais[i]!=null) {       
-				if(animais[i].getCodigo() == codigo) encontrou = true;       	
-			}	
-		}     
+		Set<Animal> animais = BancoDeDados.getAnimais(); 
+		
+        for(Iterator<Animal> iter = animais.iterator();iter.hasNext();) {
+        	Animal animalAtual = iter.next();
+            if(animalAtual.getCodigo() == codigo) {
+            	encontrou = true;
+            }
+        }
 		if(encontrou) { 
-			Atendimento[] atendimentos = BancoDeDados.getAtendimentos();
-
-			for(int i=0;i<atendimentos.length;i++) {
-				if(atendimentos[i] != null) {
-					if(atendimentos[i].getAnimal().getCodigo() == codigo) {		
-						if(temp == null){
-							//seta temp na com a primeira posição do vetor
-							temp = atendimentos[i];
-						}				
-						if(atendimentos[i].getServico().getValor() <= temp.getServico().getValor()) {
-							temp = atendimentos[i];
-							
-						}
-					}
-				}
-			}
+			Set<Atendimento> atendimentos = BancoDeDados.getAtendimentos();		
+	        for(Iterator<Atendimento> iter = atendimentos.iterator();iter.hasNext();) {
+	        	Atendimento atendimentoAtual = iter.next();
+	            if(atendimentoAtual.getAnimal().getCodigo() == codigo) {
+	            	if(temp == null) {
+	            		temp = atendimentoAtual;
+	            	}
+	            	if(atendimentoAtual.getServico().getValor() <= temp.getServico().getValor()) {
+	            		temp = atendimentoAtual;
+	            	}
+	            }
+	        }			
 		}
 		else{
 			throw new Error("Animal não encontrado!");
@@ -175,23 +174,23 @@ public class AtendimentoService {
 		float temp = 0;
 		
 		boolean encontrou = false;    
-		Animal[] animais = BancoDeDados.getAnimais(); 
-		for (int i = 0; i < animais.length; i++) { 
-			if(animais[i]!=null) {       
-				if(animais[i].getCodigo() == codigo) encontrou = true;       	
-			}	
-		}     
-		if(encontrou) { 
-			Atendimento[] atendimentos = BancoDeDados.getAtendimentos();
-			for(int i = 0; i < atendimentos.length; i++) {
-				if(atendimentos[i] != null) {
-					if(atendimentos[i].getAnimal().getCodigo() == codigo) {
-						if(atendimentos[i].getServico().getValor() > 0) {
-							temp += atendimentos[i].getServico().getValor();
-						}
-					}
-				}
-			}
+		Set<Animal> animais = BancoDeDados.getAnimais(); 
+        for(Iterator<Animal> iter = animais.iterator();iter.hasNext();) {
+        	Animal animalAtual = iter.next();
+            if(animalAtual.getCodigo() == codigo) {
+            	encontrou = true;
+            }
+        }     
+		if(encontrou) { 			
+			Set<Atendimento> atendimentos = BancoDeDados.getAtendimentos();		
+	        for(Iterator<Atendimento> iter = atendimentos.iterator();iter.hasNext();) {
+	        	Atendimento atendimentoAtual = iter.next();
+	            if(atendimentoAtual.getAnimal().getCodigo() == codigo) {
+	            	if(atendimentoAtual.getServico().getValor() > 0) {
+	            		temp += atendimentoAtual.getServico().getValor();
+	            	}
+	            }
+	        }		
 		}
 		else{
 			throw new Error("Código não encontrado!");
@@ -204,7 +203,7 @@ public class AtendimentoService {
 
 	public String getAtendimentoPorPeriodo(String inicio, String fim){
 		boolean exist = false;
-		Atendimento[] atendimentos = BancoDeDados.getAtendimentos();
+		Set<Atendimento> atendimentos = BancoDeDados.getAtendimentos();
 		String resultado = "";
 
 		Date data1, data2;
@@ -212,18 +211,17 @@ public class AtendimentoService {
 		data1 = Util.stringParaDate(inicio);
 		data2 = Util.stringParaDate(fim);
 
-		for(int i = 0;i<atendimentos.length;i++) {
-			if(atendimentos[i]!=null) {
-				if((atendimentos[i].getDate().after(data1) || atendimentos[i].getDate().equals(data1))
-				 && (atendimentos[i].getDate().before(data2) || atendimentos[i].getDate().equals(data2))){			
-					resultado += ("Atendimento: "+atendimentos[i].getCodigo()
-							+" "+atendimentos[i].getAnimal().getNome()
-							+" - "+atendimentos[i].getServico().getNome()
-							+" R$"+atendimentos[i].getServico().getValor()+"\n");
-					exist = true;
-				}
-			}
-		}
+		for(Iterator<Atendimento> iter = atendimentos.iterator();iter.hasNext();) {
+        	Atendimento atendimentoAtual = iter.next();
+            if((atendimentoAtual.getDate().after(data1) || atendimentoAtual.getDate().equals(data1))
+   				 && (atendimentoAtual.getDate().before(data2) || atendimentoAtual.getDate().equals(data2))) {
+            	resultado += ("Atendimento: "+atendimentoAtual.getCodigo()
+						+" "+atendimentoAtual.getAnimal().getNome()
+						+" - "+atendimentoAtual.getServico().getNome()
+						+" R$"+atendimentoAtual.getServico().getValor()+"\n");
+				exist = true;
+            }
+        }	
 		if(exist == false){
 			throw new Error ("Não há atendimentos no período informado!");
 		}

@@ -12,11 +12,7 @@ public class ServicoService {
 	}
 	
 	public boolean inserir(Servico servico) {
-		if(this.getServico(servico.getCodigo()) != null) {
-			throw new Error("Código existente!");
-		}
-		boolean sucesso = servicoDAO.inserir(servico);
-		
+		boolean sucesso = servicoDAO.inserir(servico);	
 		if(sucesso == false) {
 			throw new Error("Não há espaço suficiente!");
 		}
@@ -24,11 +20,7 @@ public class ServicoService {
 	}
 	
 	public boolean alterar(int codigo, Servico servico) {
-		if(this.getServico(servico.getCodigo()) != null) {
-			throw new Error("Código existente!");
-		}
 		boolean sucesso = servicoDAO.alterar(codigo, servico);
-		
 		if(sucesso == false) {
 			throw new Error("Código não encontrado!");
 		}
@@ -37,7 +29,6 @@ public class ServicoService {
 	
 	public boolean remover(int codigo) {
 		boolean sucesso = servicoDAO.remover(codigo);
-		
 		if(sucesso == false) {
 			throw new Error("Código não encontrado!");
 		}
