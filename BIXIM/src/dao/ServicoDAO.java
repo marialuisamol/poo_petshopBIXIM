@@ -24,8 +24,8 @@ public class ServicoDAO {
         for(Iterator<Servico> iter = servicos.iterator();iter.hasNext();) {
             Servico servicoAtual = iter.next();
             if(servicoAtual.getCodigo() == codigo) {
-            	servicoAtual = servico;
-            	return true;
+            	servicos.remove(servicoAtual);
+            	return servicos.add(servico);
             }
         }
 		return false;

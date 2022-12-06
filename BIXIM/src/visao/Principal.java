@@ -179,6 +179,9 @@ public class Principal {
 							
 							System.out.println("# Cidade do animal: ");
 							dog.setCidade(Util.leString());
+							
+							System.out.println("# Tem pedigree? (true ou false). ");
+							dog.setPedigree(Util.leBoolean());
 									
 							animalService.alterar(dog.getCodigo(), dog);
 							

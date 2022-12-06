@@ -20,11 +20,11 @@ public class AnimalDAO {
 	}
 	
 	public boolean alterar(int codigo, Animal animal) {
-        for(Iterator<Animal> iter = animais.iterator();iter.hasNext();) {
+		for(Iterator<Animal> iter = animais.iterator();iter.hasNext();) {
             Animal animalAtual = iter.next();
             if(animalAtual.getCodigo() == codigo) {
-            	animalAtual = animal;
-            	return true;
+            	animais.remove(animalAtual);
+            	return animais.add(animal);
             }
         }
 		return false;
