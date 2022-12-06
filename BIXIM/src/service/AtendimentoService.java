@@ -192,7 +192,8 @@ public class AtendimentoService {
 	        	Atendimento atendimentoAtual = iter.next();
 	            if(atendimentoAtual.getAnimal().getCodigo() == codigo) {
 	            	if(atendimentoAtual.getServico().getValor() > 0) {
-	            		temp += atendimentoAtual.getServico().getValor();
+	            		temp += (atendimentoAtual.getServico().getValor() +
+	                			(atendimentoAtual.getServico().getValor() * atendimentoAtual.getAnimal().getTaxa()));
 	            	}
 	            }
 	        }		
@@ -206,6 +207,7 @@ public class AtendimentoService {
 
 	}
 
+	
 	public String getAtendimentoPorPeriodo(String inicio, String fim){
 		boolean exist = false;
 		Set<Atendimento> atendimentos = BancoDeDados.getAtendimentos();

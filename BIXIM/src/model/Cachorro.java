@@ -1,5 +1,7 @@
 package model;
 
+import service.AnimalService;
+
 public class Cachorro extends Animal {
 	public boolean pedigree;
 	
@@ -11,7 +13,7 @@ public class Cachorro extends Animal {
 		this.pedigree = pedigree;
 	}
 	public boolean isPedigree() {
-		return true;
+		return pedigree;
 	}
 	public void setPedigree(boolean pedigree) {
 		this.pedigree = pedigree;
@@ -25,6 +27,7 @@ public class Cachorro extends Animal {
 	}
 	@Override
 	public float getTaxa() {
+		
 		return 0.10f;
 	}
 

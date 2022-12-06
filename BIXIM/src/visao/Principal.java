@@ -117,6 +117,10 @@ public class Principal {
 								System.out.println("# Número do documento do dono: ");
 								if(tipo == 1) {
 									String cpf = Util.leString();
+									while(!Util.cpfValido(cpf)) {
+										System.out.println("# Erro ao digitar. Tente novamente.");
+										cpf = Util.leString();
+									}
 									gato = new Gato(dog.getCodigo(),
 													dog.getNome(),
 													dog.getEndereco(),
@@ -124,6 +128,10 @@ public class Principal {
 													cpf);
 								}else if(tipo == 2) {
 									String cnpj = Util.leString();
+									while(!Util.cnpjValido(cnpj)) {
+										System.out.println("# Erro ao digitar. Tente novamente.");
+										cnpj = Util.leString();
+									}
 									gato = new Gato(dog.getCodigo(),
 													dog.getNome(),
 													dog.getEndereco(),
@@ -337,7 +345,7 @@ public class Principal {
 					}
 					
 					System.out.println("# Data do atendimento: ");
-					//atendimento.setDate(Util.leData());
+					atendimento.setDate(Util.leData());
 		
 					
 					atendimentoService.inserir(atendimento);
@@ -479,8 +487,16 @@ public class Principal {
 				try{
 					Atendimento atendimento = atendimentoService.getMaiorAtendimento(codigo);
 					System.out.print(String.format("# Maior valor de atendimento:                           #\n"
+									 + "# Código: %d\n"
+									 + "# Animal: %s\n"
 									 + "# Serviço: %s\n"
-									 + "# Valor: R$%.2f\n", atendimento.getServico().getNome(), atendimento.getServico().getValor()));
+									 + "# Valor: R$%.2f\n"
+									 + "# Data: %s\n",
+									 atendimento.getCodigo(),
+									 atendimento.getAnimal().getNome(),
+									 atendimento.getServico().getNome(),
+									 (atendimento.getServico().getValor() + (atendimento.getServico().getValor() * atendimento.getAnimal().getTaxa())),
+									 atendimento.getDate()));
 				}
 				catch(Error e){
 					System.err.println("# " + e.getMessage());
@@ -497,10 +513,18 @@ public class Principal {
 				int codigo = Util.leInteiro(); 
 				
 				try{
-					Atendimento atendimento = atendimentoService.getMenorAtendimento(codigo);
-					System.out.println(String.format("# Menor valor de atendimento:                           #\n"
+					Atendimento atendimento = atendimentoService.getMaiorAtendimento(codigo);
+					System.out.print(String.format("# Menor valor de atendimento:                           #\n"
+									 + "# Código: %d\n"
+									 + "# Animal: %s\n"
 									 + "# Serviço: %s\n"
-									 + "# Valor: R$%.2f\n", atendimento.getServico().getNome(), atendimento.getServico().getValor()));
+									 + "# Valor: R$%.2f\n"
+									 + "# Data: %s\n",
+									 atendimento.getCodigo(),
+									 atendimento.getAnimal().getNome(),
+									 atendimento.getServico().getNome(),
+									 (atendimento.getServico().getValor() + (atendimento.getServico().getValor() * atendimento.getAnimal().getTaxa())),
+									 atendimento.getDate()));
 				}
 				catch(Error e){
 					System.err.println("# " + e.getMessage());
