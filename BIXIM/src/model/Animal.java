@@ -15,7 +15,6 @@ public abstract class Animal {
 		
 	}
 	public Animal(int codigo, String nome, String endereco, String cidade) {
-		
 		this.codigo = codigo;
 		this.nome = nome;
 		this.endereco = endereco;

@@ -11,6 +11,7 @@ public class AtendimentoDAO {
 	private Set<Atendimento> atendimentos;
 	
 	public AtendimentoDAO() {
+		BancoDeDados.getInstance();
 		atendimentos = BancoDeDados.getAtendimentos();
 	}
 	

@@ -8,7 +8,8 @@ public class Gato extends Animal{
 	}
 
 	public Gato(int codigo, String nome, String endereco, String cidade, String numeroDocumento) {
-		// TODO Auto-generated constructor stub
+		super(codigo,nome,endereco,cidade);
+		this.numeroDocumento = numeroDocumento;
 	}
 	
 	public TipoDocumento getTipo() {
@@ -19,9 +20,11 @@ public class Gato extends Animal{
 		
 	}
 	
+
 	@Override
 	public String toString() {
-		return "Gato [numeroDocumento=" + numeroDocumento + "]";
+		return "Código: "+getCodigo()+" Nome: "+getNome()+" Endereço: "+getEndereco()+
+				" Cidade: "+getCidade()+" Documento: "+numeroDocumento+" "; //pessoa fisica.
 	}
 
 	public String getNumeroDocumento() {
@@ -34,8 +37,7 @@ public class Gato extends Animal{
 
 	@Override
 	public float getTaxa() {
-		// TODO Auto-generated method stub
-		return 0;
+		return 0.15f;
 	}
 	
 }

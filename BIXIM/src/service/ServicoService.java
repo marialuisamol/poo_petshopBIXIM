@@ -12,6 +12,9 @@ public class ServicoService {
 	}
 	
 	public boolean inserir(Servico servico) {
+		if(this.getServico(servico.getCodigo()) != null) {
+			throw new Error("Código existente!");
+		}
 		boolean sucesso = servicoDAO.inserir(servico);	
 		if(sucesso == false) {
 			throw new Error("Não há espaço suficiente!");

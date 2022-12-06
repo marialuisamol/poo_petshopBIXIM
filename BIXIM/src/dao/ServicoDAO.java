@@ -12,6 +12,7 @@ public class ServicoDAO {
 	private Set<Servico> servicos;
 	
 	public ServicoDAO() {
+		BancoDeDados.getInstance();
 		servicos = BancoDeDados.getServicos();
 	}
 	

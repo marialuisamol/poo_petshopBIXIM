@@ -11,6 +11,7 @@ public class AnimalDAO {
 	private Set<Animal> animais;
 	
 	public AnimalDAO() {
+		BancoDeDados.getInstance();
 		animais = BancoDeDados.getAnimais();
 	}
 	

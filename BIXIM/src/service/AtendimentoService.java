@@ -23,6 +23,9 @@ public class AtendimentoService {
 	}
 	
 	public boolean inserir(Atendimento atendimento){
+		if(this.getAtendimento(atendimento.getCodigo()) != null) {
+			throw new Error("Código existente!");
+		}
 		boolean sucesso = atendimentoDAO.inserir(atendimento);
 		if(sucesso == false) {
 			throw new Error("Não há espaço suficiente!");
@@ -84,8 +87,10 @@ public class AtendimentoService {
         	Atendimento atendimentoAtual = iter.next();
             if(atendimentoAtual.getAnimal().getCodigo() == codigo) {
             	notaFiscal +=  String.format("# Serviço: %s\tValor:%.2f\n", atendimentoAtual.getServico().getNome(),
-            																atendimentoAtual.getServico().getValor());
-            	total += atendimentoAtual.getServico().getValor();
+            			(atendimentoAtual.getServico().getValor() + 
+            					(atendimentoAtual.getServico().getValor() * atendimentoAtual.getAnimal().getTaxa())));
+            	total += (atendimentoAtual.getServico().getValor() +
+            			(atendimentoAtual.getServico().getValor() * atendimentoAtual.getAnimal().getTaxa()));
             }
         }
 		

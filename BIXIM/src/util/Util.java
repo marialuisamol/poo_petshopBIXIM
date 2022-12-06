@@ -73,7 +73,31 @@ public class Util {
 		}
 		return valor;
 	}
+	
+	public static boolean leBoolean() {
+		Scanner entrada;
+		boolean in = false, erro = true;
+		while(erro) {
+			try {
+				entrada = new Scanner(System.in);
+				in = entrada.nextBoolean();
+				erro = false;
+			} catch (Exception e) {
+				System.out.println("# Erro ao digitar. Tente novamente.");
+				entrada = null;
+			}
+		}
+		return in;
+	}
 
+	public static boolean cpfValido(String cpf) {
+		return true;
+	}
+	
+	public static boolean cnpjValido(String cpf) {
+		return true;
+	}
+	
 	public static Date leData() {
 		Scanner entrada;
 		Date valor = null;
@@ -93,6 +117,7 @@ public class Util {
 		}
 		return valor;
 	}
+	
 
 	public static Date stringParaDate(String dt) {
 
