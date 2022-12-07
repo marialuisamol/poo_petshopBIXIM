@@ -67,7 +67,6 @@ public class AtendimentoService {
 			throw new Error("Animal não encontrado!");
 		}
 		
-		Set<Atendimento> listaAtendimentos = atendimentoDAO.getAll();
 		
 		float total = 0f;
 		
@@ -82,18 +81,17 @@ public class AtendimentoService {
 										 + "#########################################################\n", 
 										 animal.getNome(), animal.getEndereco(), animal.getCidade());
 		
-		
-        for(Iterator<Atendimento> iter = listaAtendimentos.iterator();iter.hasNext();) {
-        	Atendimento atendimentoAtual = iter.next();
-            if(atendimentoAtual.getAnimal().getCodigo() == codigo) {
-            	notaFiscal +=  String.format("# Serviço: %s\tValor:%.2f\n", atendimentoAtual.getServico().getNome(),
-            			(atendimentoAtual.getServico().getValor() + 
-            					(atendimentoAtual.getServico().getValor() * atendimentoAtual.getAnimal().getTaxa())));
-            	total += (atendimentoAtual.getServico().getValor() +
-            			(atendimentoAtual.getServico().getValor() * atendimentoAtual.getAnimal().getTaxa()));
-            }
-        }
-		
+		notaFiscal += this.listaAtendimentos(codigo);
+
+		Set<Atendimento> listaAtendimentos = atendimentoDAO.getAll();
+
+		for(Iterator<Atendimento> iter = listaAtendimentos.iterator();iter.hasNext();) {
+			Atendimento atendimentoAtual = iter.next();
+			if(atendimentoAtual.getAnimal().getCodigo() == codigo) {
+				total += (atendimentoAtual.getServico().getValor() +
+						(atendimentoAtual.getServico().getValor() * atendimentoAtual.getAnimal().getTaxa()));
+			}
+		}
 		
 		notaFiscal += String.format("#########################################################\n"
 								   + "# Total:\tR$%.2f\n"
@@ -236,4 +234,20 @@ public class AtendimentoService {
 		return resultado;
 	}
 
+	private String listaAtendimentos(int codigo){	
+		String resultado = "";
+
+		Set<Atendimento> listaAtendimentos = atendimentoDAO.getAll();
+
+		for(Iterator<Atendimento> iter = listaAtendimentos.iterator();iter.hasNext();) {
+        	Atendimento atendimentoAtual = iter.next();
+            if(atendimentoAtual.getAnimal().getCodigo() == codigo) {
+            	resultado +=  String.format("# Serviço: %s\tValor:%.2f\n", atendimentoAtual.getServico().getNome(),
+            			(atendimentoAtual.getServico().getValor() + 
+            					(atendimentoAtual.getServico().getValor() * atendimentoAtual.getAnimal().getTaxa())));
+            	
+            }
+        }
+		return resultado;
+	}
 }

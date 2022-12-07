@@ -42,10 +42,10 @@ public class AnimalService {
 		return animalDAO.getAnimal(codigo);
 	}
 
+
 	@Override
 	public String toString() {
 		return "AnimalService [animalDAO=" + animalDAO + "]";
 	}
-	
 	
 }
