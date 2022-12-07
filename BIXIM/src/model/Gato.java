@@ -2,26 +2,29 @@ package model;
 
 public class Gato extends Animal{
 	private String numeroDocumento;
+	private TipoDocumento tipo;
 	
 	public Gato() {
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	public Gato(int codigo, String nome, String endereco, String cidade, String numeroDocumento) {
-		// TODO Auto-generated constructor stub
+		super(codigo,nome,endereco,cidade);
+		this.numeroDocumento = numeroDocumento;
 	}
 	
 	public TipoDocumento getTipo() {
-		return null;
+		return tipo;
 		
 	}
 	public void setTipo(TipoDocumento documento) {
-		
+		this.tipo = documento;
 	}
 	
 	@Override
 	public String toString() {
-		return "Gato [numeroDocumento=" + numeroDocumento + "]";
+		return "Código: "+getCodigo()+" Nome: "+getNome()+" Endereço: "+getEndereco()+
+				" Cidade: "+getCidade()+" Documento: "+numeroDocumento+" ";
 	}
 
 	public String getNumeroDocumento() {
@@ -34,8 +37,7 @@ public class Gato extends Animal{
 
 	@Override
 	public float getTaxa() {
-		// TODO Auto-generated method stub
-		return 0;
+		return 0.15f;
 	}
 	
 }

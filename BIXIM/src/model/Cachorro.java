@@ -1,29 +1,34 @@
 package model;
 
+import service.AnimalService;
+
 public class Cachorro extends Animal {
 	public boolean pedigree;
 	
 	public Cachorro() {
 		// TODO Auto-generated constructor stub
 	}
-	public Cachorro(int codigo,String nome, String endereco, String Cidade, boolean pedigree) {
-		
+	public Cachorro(int codigo,String nome, String endereco, String cidade, boolean pedigree) {
+		super(codigo,nome,endereco,cidade);
+		this.pedigree = pedigree;
 	}
 	public boolean isPedigree() {
-		return true;
+		return pedigree;
 	}
 	public void setPedigree(boolean pedigree) {
 		this.pedigree = pedigree;
 	}
 
+	
 	@Override
 	public String toString() {
-		return "Cachorro [pedigree=" + pedigree + "]";
+		return "Código: "+getCodigo()+" Nome: "+getNome()+" Endereço: "+getEndereco()+
+				" Cidade: "+getCidade()+" Pedigree: "+pedigree+" ";
 	}
 	@Override
 	public float getTaxa() {
-		// TODO Auto-generated method stub
-		return 0;
+		
+		return 0.10f;
 	}
 
 	

@@ -11,6 +11,7 @@ public class AtendimentoDAO {
 	private Set<Atendimento> atendimentos;
 	
 	public AtendimentoDAO() {
+		BancoDeDados.getInstance();
 		atendimentos = BancoDeDados.getAtendimentos();
 	}
 	
@@ -22,8 +23,8 @@ public class AtendimentoDAO {
         for(Iterator<Atendimento> iter = atendimentos.iterator();iter.hasNext();) {
             Atendimento atendimentoAtual = iter.next();
             if(atendimentoAtual.getCodigo() == codigo) {
-            	atendimentoAtual = atendimento;
-            	return true;
+            	atendimentos.remove(atendimentoAtual);
+            	return atendimentos.add(atendimento);
             }
         }
 		return false;

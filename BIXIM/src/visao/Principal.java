@@ -4,6 +4,7 @@ import bd.BancoDeDados;
 import model.Animal;
 import model.Atendimento;
 import model.Cachorro;
+import model.Gato;
 import model.Servico;
 import service.AnimalService;
 import service.AtendimentoService;
@@ -11,6 +12,8 @@ import service.ServicoService;
 import util.Login;
 import util.Util;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.Set;
 
 
 public class Principal {
@@ -81,46 +84,63 @@ public class Principal {
 						switch(op1) {
 						
 						case 1: {
-							Animal animal;
+							Cachorro dog = new Cachorro();
 							System.out.println("#########################################################\n"
 											 + "#                   CADASTRO DE ANIMAL                  #\n"
 											 + "# Código do animal: ");
-							animal.setCodigo(Util.leInteiro());
+							dog.setCodigo(Util.leInteiro());
 							
 							System.out.println("# Nome do animal");
-							animal.setNome(Util.leString());
+							dog.setNome(Util.leString());
 							
 							System.out.println("# Endereço do animal: ");
-							animal.setEndereco(Util.leString());
+							dog.setEndereco(Util.leString());
 							
 							System.out.println("# Cidade do animal: ");
-							animal.setCidade(Util.leString());
+							dog.setCidade(Util.leString());
 							
 							System.out.println("# Tipo: 1) Cachorro. 2) Gato. ");
 							int tipo = Util.leInteiro();
 							if(tipo == 1) {
 								 System.out.println("# Tem pedigree? (true ou false). ");
-								 // HERE.
-								 Cachorro cachorro = new Cachorro(animal.getCodigo(),
-										 							animal.getNome(),
-										 							animal.getEndereco(),
-										 							animal.getCidade(),
-										 							true);
+								 boolean ped = Util.leBoolean();
+								 Cachorro cachorro = new Cachorro(dog.getCodigo(),
+									 							  dog.getNome(),
+									 							  dog.getEndereco(),
+									 							  dog.getCidade(),
+									 							  ped);
+								 animalService.inserir(cachorro);
 							}else if(tipo == 2) {
 								System.out.println("# Tipo documento do dono: 1) CPF.  2) CNPJ. ");
 								tipo = Util.leInteiro();
+								Gato gato = null;
 								System.out.println("# Número do documento do dono: ");
 								if(tipo == 1) {
-									// CPF.
+									String cpf = Util.leString();
+									while(!Util.cpfValido(cpf)) {
+										System.out.println("# Erro ao digitar. Tente novamente.");
+										cpf = Util.leString();
+									}
+									gato = new Gato(dog.getCodigo(),
+													dog.getNome(),
+													dog.getEndereco(),
+													dog.getCidade(),
+													cpf);
 								}else if(tipo == 2) {
-									// CNPJ.
+									String cnpj = Util.leString();
+									while(!Util.cnpjValido(cnpj)) {
+										System.out.println("# Erro ao digitar. Tente novamente.");
+										cnpj = Util.leString();
+									}
+									gato = new Gato(dog.getCodigo(),
+													dog.getNome(),
+													dog.getEndereco(),
+													dog.getCidade(),
+													cnpj);
 								}
+								animalService.inserir(gato);
 							}
 							
-							
-							
-							
-							animalService.inserir(animal);  //change all.
 							System.out.println("# Dados inseridos com sucesso!                          #");
 							
 							break;
@@ -128,13 +148,13 @@ public class Principal {
 						}//case 1
 						
 						case 2: {
-							Animal animal;
+							Cachorro dog = new Cachorro();
 							System.out.println("#########################################################\n"
 											 + "#                     DELETAR ANIMAL                    #\n"
 											 + "# Código do animal: ");
-							animal.setCodigo(Util.leInteiro());
+							dog.setCodigo(Util.leInteiro());
 							
-							animalService.remover(animal.getCodigo());
+							animalService.remover(dog.getCodigo());
 							
 							System.out.println("# Dados deletados com sucesso!                          #");
 							
@@ -142,25 +162,28 @@ public class Principal {
 						}//case 2
 						
 						case 3: {
-							Animal animal;
+							Cachorro dog = new Cachorro();
 							System.out.println("#########################################################\n"
 											 + "#                     ALTERAR ANIMAL                    #\n"
 											 + "# Código do animal: ");
-							animal.setCodigo(Util.leInteiro());
+							dog.setCodigo(Util.leInteiro());
 							
 							System.out.println("#########################################################\n"
 											 + "#                       NOVOS DADOS                     #\n");
 							
 							System.out.println("# Nome do animal");
-							animal.setNome(Util.leString());
+							dog.setNome(Util.leString());
 							
 							System.out.println("# Endereço do animal: ");
-							animal.setEndereco(Util.leString());
+							dog.setEndereco(Util.leString());
 							
 							System.out.println("# Cidade do animal: ");
-							animal.setCidade(Util.leString());
+							dog.setCidade(Util.leString());
+							
+							System.out.println("# Tem pedigree? (true ou false). ");
+							dog.setPedigree(Util.leBoolean());
 									
-							animalService.alterar(animal.getCodigo(), animal);
+							animalService.alterar(dog.getCodigo(), dog);
 							
 							
 							System.out.println("# Dados alterados com sucesso!                          #");
@@ -216,6 +239,7 @@ public class Principal {
 							
 							System.out.println("# Valor do serviço: ");
 							servico.setValor(Util.leFloat());
+							
 							
 							servicoService.inserir(servico);
 							
@@ -290,6 +314,9 @@ public class Principal {
 					
 					System.out.println("#########################################################\n"
 									 + "#               LANÇAMENTO DE ATENDIMENTOS              #\n");
+					
+					System.out.println("# Código do atendimento: ");
+					atendimento.setCodigo(Util.leInteiro());
 					while(true) {
 						System.out.println("# Código do animal: ");
 						int codigo = Util.leInteiro();
@@ -322,6 +349,7 @@ public class Principal {
 					
 					System.out.println("# Data do atendimento: ");
 					atendimento.setDate(Util.leData());
+		
 					
 					atendimentoService.inserir(atendimento);
 					
@@ -344,13 +372,11 @@ public class Principal {
 					break;
 				}
 				else if(carac == 's' || carac == 'S') {
-					Animal[] lista = BancoDeDados.getAnimais();
-					for(int i = 0; i < lista.length; i++) {
-						if (lista[i] == null) {
-							continue;
-						}
-						System.out.println(lista[i]);
-					}
+					Set<Animal> lista = BancoDeDados.getAnimais();
+			        for(Iterator<Animal> iter = lista.iterator();iter.hasNext();) {
+			            Animal animalAtual = iter.next();
+			            System.out.println(animalAtual);
+			        }
 				}
 				else {
 					System.err.println("# Caractere inválido!                                   #\n");
@@ -370,14 +396,11 @@ public class Principal {
 					break;
 				}
 				else if(carac == 's' || carac == 'S') {
-					Servico[] lista = BancoDeDados.getServicos();
-					for(int i = 0; i < lista.length; i++) {
-					  if (lista[i] == null) {
-					    continue;
-					  }
-
-					  System.out.println(lista[i]);
-					}
+					Set<Servico> lista = BancoDeDados.getServicos();
+			        for(Iterator<Servico> iter = lista.iterator();iter.hasNext();) {
+			            Servico servicoAtual = iter.next();
+			            System.out.println(servicoAtual);
+			        }
 				}
 				else {
 					System.err.println("# Caractere inválido!                                   #\n");
@@ -396,14 +419,11 @@ public class Principal {
 					break;
 				}
 				else if(carac == 's' || carac == 'S') {
-					Atendimento[] lista = BancoDeDados.getAtendimentos();
-					for(int i = 0; i < lista.length; i++) {
-					  if (lista[i] == null) {
-					    continue;
-					  }
-
-					  System.out.println(lista[i]);
-					}
+					Set<Atendimento> lista = BancoDeDados.getAtendimentos();
+			        for(Iterator<Atendimento> iter = lista.iterator();iter.hasNext();) {
+			            Atendimento atendimentoAtual = iter.next();
+			            System.out.println(atendimentoAtual);
+			        }
 				}
 				else {
 					System.err.println("# Caractere inválido!                                   #\n");
@@ -470,8 +490,16 @@ public class Principal {
 				try{
 					Atendimento atendimento = atendimentoService.getMaiorAtendimento(codigo);
 					System.out.print(String.format("# Maior valor de atendimento:                           #\n"
+									 + "# Código: %d\n"
+									 + "# Animal: %s\n"
 									 + "# Serviço: %s\n"
-									 + "# Valor: R$%.2f\n", atendimento.getServico().getNome(), atendimento.getServico().getValor()));
+									 + "# Valor: R$%.2f\n"
+									 + "# Data: %s\n",
+									 atendimento.getCodigo(),
+									 atendimento.getAnimal().getNome(),
+									 atendimento.getServico().getNome(),
+									 (atendimento.getServico().getValor() + (atendimento.getServico().getValor() * atendimento.getAnimal().getTaxa())),
+									 atendimento.getDate()));
 				}
 				catch(Error e){
 					System.err.println("# " + e.getMessage());
@@ -488,10 +516,18 @@ public class Principal {
 				int codigo = Util.leInteiro(); 
 				
 				try{
-					Atendimento atendimento = atendimentoService.getMenorAtendimento(codigo);
-					System.out.println(String.format("# Menor valor de atendimento:                           #\n"
+					Atendimento atendimento = atendimentoService.getMaiorAtendimento(codigo);
+					System.out.print(String.format("# Menor valor de atendimento:                           #\n"
+									 + "# Código: %d\n"
+									 + "# Animal: %s\n"
 									 + "# Serviço: %s\n"
-									 + "# Valor: R$%.2f\n", atendimento.getServico().getNome(), atendimento.getServico().getValor()));
+									 + "# Valor: R$%.2f\n"
+									 + "# Data: %s\n",
+									 atendimento.getCodigo(),
+									 atendimento.getAnimal().getNome(),
+									 atendimento.getServico().getNome(),
+									 (atendimento.getServico().getValor() + (atendimento.getServico().getValor() * atendimento.getAnimal().getTaxa())),
+									 atendimento.getDate()));
 				}
 				catch(Error e){
 					System.err.println("# " + e.getMessage());

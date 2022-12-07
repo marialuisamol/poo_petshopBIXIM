@@ -12,6 +12,9 @@ public class AnimalService {
 	}
 	
 	public boolean inserir(Animal animal){
+		if (this.getAnimal(animal.getCodigo()) != null) {
+			throw new Error("Código existente!");
+		}
 		boolean sucesso = animalDAO.inserir(animal);
 		if(sucesso == false) {
 			throw new Error("Não há espaço suficiente!");

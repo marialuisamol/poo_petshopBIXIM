@@ -8,7 +8,7 @@ public class Servico {
 	private float valor;
 	
 	public Servico() {
-	
+		
 	}
 
 	public Servico(int codigo, String nome, float valor) {

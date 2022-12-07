@@ -59,7 +59,11 @@ public class Atendimento {
 	public String toString() {
 		return "\n#########################################################\n"
 	 	 + "#                   DADOS ATENDIMENTO                   #\n"
-		 + "# Código = " + codigo + "\n# Data = " + Util.dateParaString(date);
+		 + "# Código = " + codigo + 
+		 "\n# Nome: "+getAnimal().getNome() +
+		 "\n# Serviço: "+getServico().getNome()+
+		 "\n# Valor: "+(getServico().getValor() + (getServico().getValor() * getAnimal().getTaxa()))+
+		 "\n# Data = " + Util.dateParaString(date);
 	}
 	
 	
