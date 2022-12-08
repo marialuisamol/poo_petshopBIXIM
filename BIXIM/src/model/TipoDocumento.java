@@ -6,7 +6,7 @@ public enum TipoDocumento {
 	private String tipo;
 	
 	private TipoDocumento() {
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	public String getTipo() {

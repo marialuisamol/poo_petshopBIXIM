@@ -1,6 +1,4 @@
 package visao;
-
-import bd.BancoDeDados;
 import model.Animal;
 import model.Atendimento;
 import model.Cachorro;
@@ -372,7 +370,7 @@ public class Principal {
 					break;
 				}
 				else if(carac == 's' || carac == 'S') {
-					Set<Animal> lista = BancoDeDados.getAnimais();
+					Set<Animal> lista = animalService.getAll();
 			        for(Iterator<Animal> iter = lista.iterator();iter.hasNext();) {
 			            Animal animalAtual = iter.next();
 			            System.out.println(animalAtual);
@@ -396,7 +394,7 @@ public class Principal {
 					break;
 				}
 				else if(carac == 's' || carac == 'S') {
-					Set<Servico> lista = BancoDeDados.getServicos();
+					Set<Servico> lista = servicoService.getAll();
 			        for(Iterator<Servico> iter = lista.iterator();iter.hasNext();) {
 			            Servico servicoAtual = iter.next();
 			            System.out.println(servicoAtual);
@@ -419,7 +417,7 @@ public class Principal {
 					break;
 				}
 				else if(carac == 's' || carac == 'S') {
-					Set<Atendimento> lista = BancoDeDados.getAtendimentos();
+					Set<Atendimento> lista = atendimentoService.getAll();
 			        for(Iterator<Atendimento> iter = lista.iterator();iter.hasNext();) {
 			            Atendimento atendimentoAtual = iter.next();
 			            System.out.println(atendimentoAtual);
@@ -458,6 +456,7 @@ public class Principal {
 				
 				break;
 			}//case 7
+			
 			
 			case 8: {
 				System.out.println("#########################################################\n"

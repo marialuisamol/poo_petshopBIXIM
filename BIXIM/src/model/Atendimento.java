@@ -2,6 +2,8 @@ package model;
 
 import java.util.Date;
 
+import com.google.gson.Gson;
+
 import util.Util;
 
 public class Atendimento {
@@ -66,6 +68,9 @@ public class Atendimento {
 		 "\n# Data = " + Util.dateParaString(date);
 	}
 	
-	
+	public String toJson() {
+		Gson gson = new Gson();
+		return gson.toJson(this);
+	}
 	
 }

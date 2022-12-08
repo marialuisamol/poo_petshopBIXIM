@@ -1,5 +1,6 @@
 package service;
 
+import java.util.Set;
 import dao.ServicoDAO;
 import model.Servico;
 
@@ -11,31 +12,18 @@ public class ServicoService {
 		servicoDAO = new ServicoDAO();
 	}
 	
-	public boolean inserir(Servico servico) {
-		if(this.getServico(servico.getCodigo()) != null) {
-			throw new Error("Código existente!");
-		}
-		boolean sucesso = servicoDAO.inserir(servico);	
-		if(sucesso == false) {
-			throw new Error("Não há espaço suficiente!");
-		}
-		return sucesso;
+	public void inserir(Servico servico) {
+		
+		servicoDAO.inserir(servico);	
 	}
 	
-	public boolean alterar(int codigo, Servico servico) {
-		boolean sucesso = servicoDAO.alterar(codigo, servico);
-		if(sucesso == false) {
-			throw new Error("Código não encontrado!");
-		}
-		return sucesso;
+	public void alterar(int codigo, Servico servico) {
+		
+		servicoDAO.alterar(codigo, servico);	
 	}
 	
-	public boolean remover(int codigo) {
-		boolean sucesso = servicoDAO.remover(codigo);
-		if(sucesso == false) {
-			throw new Error("Código não encontrado!");
-		}
-		return sucesso;
+	public void remover(int codigo) {
+		servicoDAO.remover(codigo);
 	}
 	
 	public void limpaDados() {
@@ -51,5 +39,7 @@ public class ServicoService {
 		return "ServicoService [servicoDAO=" + servicoDAO + "]";
 	}
 	
-	
+	public Set<Servico> getAll(){
+		return servicoDAO.getAll();
+	}
 }

@@ -1,61 +1,62 @@
 package dao;
 
-import java.util.Iterator;
+import java.util.HashSet;
 import java.util.Set;
+
+import org.bson.Document;
+
+import com.mongodb.client.FindIterable;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.model.Filters;
 
 import bd.BancoDeDados;
 import model.Atendimento;
 
 public class AtendimentoDAO {
 	
-	private Set<Atendimento> atendimentos;
+	private MongoCollection<Atendimento> atendimentos;
 	
 	public AtendimentoDAO() {
 		BancoDeDados.getInstance();
 		atendimentos = BancoDeDados.getAtendimentos();
 	}
 	
-	public boolean inserir(Atendimento atendimento) {
-		return atendimentos.add(atendimento);
+	public void inserir(Atendimento atendimento) {
+
+
+		atendimentos.insertOne(atendimento);
 	}
 	
-	public boolean alterar(int codigo, Atendimento atendimento) {
-        for(Iterator<Atendimento> iter = atendimentos.iterator();iter.hasNext();) {
-            Atendimento atendimentoAtual = iter.next();
-            if(atendimentoAtual.getCodigo() == codigo) {
-            	atendimentos.remove(atendimentoAtual);
-            	return atendimentos.add(atendimento);
-            }
-        }
-		return false;
+	public void alterar(int codigo, Atendimento atendimento) {
+        
+		atendimentos.updateOne(Filters.eq("codigo", codigo), Document.parse(atendimento.toJson()));
+	
 	}
 	
-	public boolean remover(int codigo) {
-        for(Iterator<Atendimento> iter = atendimentos.iterator();iter.hasNext();) {
-            Atendimento atendimentoAtual = iter.next();
-            if(atendimentoAtual.getCodigo() == codigo) {
-            	return atendimentos.remove(atendimentoAtual);
-            }
-        }
-		return false;
+	public void remover(int codigo) {
+        atendimentos.deleteOne(Filters.eq("codigo", codigo));
+        
 	}
+	
 	
 	public void limpaDados() {
-		atendimentos.removeAll(atendimentos);
+		atendimentos.drop();
 	}
 	
+	
 	public Atendimento getAtendimento(int codigo) {
-        for(Iterator<Atendimento> iter = atendimentos.iterator();iter.hasNext();) {
-            Atendimento atendimentoAtual = iter.next();
-            if(atendimentoAtual.getCodigo() == codigo) {
-            	return atendimentoAtual;
-            }
-        }
-		return null;
+
+		Atendimento atendimento = atendimentos.find(Filters.eq("codigo", codigo)).first();
+		
+		return atendimento;
 	}
 	
 	public Set<Atendimento> getAll() {
-		return atendimentos;
+		
+		FindIterable<Atendimento> cursor = atendimentos.find();
+		Set<Atendimento> listaAll = cursor.into(new HashSet<>());
+		
+		return listaAll;
 	}
 
 }

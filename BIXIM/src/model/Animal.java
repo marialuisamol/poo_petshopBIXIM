@@ -2,6 +2,8 @@ package model;
 
 import java.util.Objects;
 
+import com.google.gson.Gson;
+
 public abstract class Animal {
 	
 	private int codigo;
@@ -14,6 +16,7 @@ public abstract class Animal {
 	public Animal() {
 		
 	}
+
 	public Animal(int codigo, String nome, String endereco, String cidade) {
 		this.codigo = codigo;
 		this.nome = nome;
@@ -59,6 +62,11 @@ public abstract class Animal {
 		return "\n#########################################################\n"
 		 	 + "#                      DADOS ANIMAL                     #\n"
 			 + "# Código = " + codigo + "\n# Nome = " + nome + "\n# Endereco = " + endereco + "\n# Cidade = " + cidade ;
+	}
+
+	public String toJson() {
+		Gson gson = new Gson();
+		return gson.toJson(this);
 	}
 	@Override
 	public int hashCode() {

@@ -1,23 +1,24 @@
 package bd;
 
-import java.util.HashSet;
-import java.util.Set;
+import com.mongodb.client.MongoCollection;
 
 import model.Animal;
 import model.Atendimento;
 import model.Servico;
 
+
 public class BancoDeDados {
-	
-	private static Set<Animal> animais;
-	private static Set<Servico> servicos;
-	private static Set<Atendimento> atendimentos;
+
+	private static MongoCollection<Animal> animais;
+	private static MongoCollection<Servico> servicos;
+	private static MongoCollection<Atendimento> atendimentos;
 	private static BancoDeDados bancoDeDados;
-	
+
+
 	private BancoDeDados() {
-		animais = new HashSet<>(); 
-		servicos = new HashSet<>();
-		atendimentos = new HashSet<>();
+		animais = MongoConnection.getInstance().getDB().getCollection("animais", Animal.class); 
+		servicos = MongoConnection.getInstance().getDB().getCollection("servicos", Servico.class);
+		atendimentos = MongoConnection.getInstance().getDB().getCollection("atendimentos", Atendimento.class);
 	}
 	
 	public static BancoDeDados getInstance() {
@@ -28,17 +29,16 @@ public class BancoDeDados {
 		return bancoDeDados;
 	}
 
-	public static Set<Animal> getAnimais() {
+	public static MongoCollection<Animal> getAnimais() {
 		return animais;
 	}
 
-	public static Set<Servico> getServicos() {
+	public static MongoCollection<Servico> getServicos() {
 		return servicos;
 	}
 
-	public static Set<Atendimento> getAtendimentos() {
+	public static MongoCollection<Atendimento> getAtendimentos() {
 		return atendimentos;
 	}
-	
-	
+   
 }

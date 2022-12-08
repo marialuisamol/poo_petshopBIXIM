@@ -3,8 +3,6 @@ package service;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.Set;
-
-import bd.BancoDeDados;
 import dao.AtendimentoDAO;
 import model.Animal;
 import model.Atendimento;
@@ -22,34 +20,28 @@ public class AtendimentoService {
 		
 	}
 	
-	public boolean inserir(Atendimento atendimento){
-		if(this.getAtendimento(atendimento.getCodigo()) != null) {
-			throw new Error("Código existente!");
-		}
-		boolean sucesso = atendimentoDAO.inserir(atendimento);
-		if(sucesso == false) {
-			throw new Error("Não há espaço suficiente!");
-		}
-		return sucesso;
+	public void inserir(Atendimento atendimento){
+
+		atendimentoDAO.inserir(atendimento);
+	}
+
+	public void alterar(int codigo, Atendimento atendimento) {
+
+
+		atendimentoDAO.alterar(codigo, atendimento);
+	}
+
+	public void remover(int codigo) {
 		
+		atendimentoDAO.remover(codigo);
 	}
-	public boolean alterar(int codigo, Atendimento atendimento) {
-		boolean sucesso = atendimentoDAO.alterar(codigo, atendimento);
-		if(sucesso == false) {
-			throw new Error("Código não encontrado!");
-		}
-		return sucesso;
-	}
-	public boolean remover(int codigo) {
-		boolean sucesso = atendimentoDAO.remover(codigo);
-		if(sucesso == false) {
-			throw new Error("Código não encontrado!");
-		}
-		return sucesso;
-	}
+
+	
 	public void limpaDados() {
 		atendimentoDAO.limpaDados();
 	}
+	
+	
 	public Atendimento getAtendimento(int codigo) {
 		return atendimentoDAO.getAtendimento(codigo);
 	}
@@ -104,7 +96,7 @@ public class AtendimentoService {
 		
 		Atendimento temp = null;
 		boolean encontrou = false;    
-		Set<Animal> animais = BancoDeDados.getAnimais();
+		Set<Animal> animais = animalService.getAll();
         for(Iterator<Animal> iter = animais.iterator();iter.hasNext();) {
         	Animal animalAtual = iter.next();
             if(animalAtual.getCodigo() == codigo) {
@@ -113,7 +105,7 @@ public class AtendimentoService {
         }	
 		    
 		if(encontrou) { 
-			Set<Atendimento> atendimentos = BancoDeDados.getAtendimentos();		
+			Set<Atendimento> atendimentos = atendimentoDAO.getAll();		
 	        for(Iterator<Atendimento> iter = atendimentos.iterator();iter.hasNext();) {
 	        	Atendimento atendimentoAtual = iter.next();
 	            if(atendimentoAtual.getAnimal().getCodigo() == codigo) {
@@ -140,7 +132,7 @@ public class AtendimentoService {
 	public Atendimento getMenorAtendimento(int codigo) {
 		boolean encontrou = false; 
 		Atendimento temp = null;   
-		Set<Animal> animais = BancoDeDados.getAnimais(); 
+		Set<Animal> animais = animalService.getAll(); 
 		
         for(Iterator<Animal> iter = animais.iterator();iter.hasNext();) {
         	Animal animalAtual = iter.next();
@@ -149,7 +141,7 @@ public class AtendimentoService {
             }
         }
 		if(encontrou) { 
-			Set<Atendimento> atendimentos = BancoDeDados.getAtendimentos();		
+			Set<Atendimento> atendimentos = atendimentoDAO.getAll();		
 	        for(Iterator<Atendimento> iter = atendimentos.iterator();iter.hasNext();) {
 	        	Atendimento atendimentoAtual = iter.next();
 	            if(atendimentoAtual.getAnimal().getCodigo() == codigo) {
@@ -177,7 +169,7 @@ public class AtendimentoService {
 		float temp = 0;
 		
 		boolean encontrou = false;    
-		Set<Animal> animais = BancoDeDados.getAnimais(); 
+		Set<Animal> animais = animalService.getAll(); 
         for(Iterator<Animal> iter = animais.iterator();iter.hasNext();) {
         	Animal animalAtual = iter.next();
             if(animalAtual.getCodigo() == codigo) {
@@ -185,7 +177,7 @@ public class AtendimentoService {
             }
         }     
 		if(encontrou) { 			
-			Set<Atendimento> atendimentos = BancoDeDados.getAtendimentos();		
+			Set<Atendimento> atendimentos = atendimentoDAO.getAll();		
 	        for(Iterator<Atendimento> iter = atendimentos.iterator();iter.hasNext();) {
 	        	Atendimento atendimentoAtual = iter.next();
 	            if(atendimentoAtual.getAnimal().getCodigo() == codigo) {
@@ -208,7 +200,7 @@ public class AtendimentoService {
 	
 	public String getAtendimentoPorPeriodo(String inicio, String fim){
 		boolean exist = false;
-		Set<Atendimento> atendimentos = BancoDeDados.getAtendimentos();
+		Set<Atendimento> atendimentos = atendimentoDAO.getAll();
 		String resultado = "";
 
 		Date data1, data2;
@@ -250,4 +242,9 @@ public class AtendimentoService {
         }
 		return resultado;
 	}
+
+	public Set<Atendimento> getAll(){
+		return atendimentoDAO.getAll();
+	}
+
 }

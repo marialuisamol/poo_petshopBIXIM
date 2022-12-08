@@ -1,12 +1,10 @@
 package model;
 
-import service.AnimalService;
-
 public class Cachorro extends Animal {
 	public boolean pedigree;
 	
 	public Cachorro() {
-		// TODO Auto-generated constructor stub
+		
 	}
 	public Cachorro(int codigo,String nome, String endereco, String cidade, boolean pedigree) {
 		super(codigo,nome,endereco,cidade);

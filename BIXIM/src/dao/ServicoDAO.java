@@ -1,61 +1,57 @@
 package dao;
 
-
-import java.util.Iterator;
+import java.util.HashSet;
 import java.util.Set;
+import org.bson.Document;
+import com.mongodb.client.FindIterable;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.model.Filters;
 
 import bd.BancoDeDados;
 import model.Servico;
 
 public class ServicoDAO {
 	
-	private Set<Servico> servicos;
+	private MongoCollection<Servico> servicos;
 	
 	public ServicoDAO() {
 		BancoDeDados.getInstance();
 		servicos = BancoDeDados.getServicos();
 	}
 	
-	public boolean inserir(Servico servico) {
-		return servicos.add(servico);
+	public void inserir(Servico servico) {
+		
+		servicos.insertOne(servico);
 	}
 	
-	public boolean alterar(int codigo, Servico servico) {
-        for(Iterator<Servico> iter = servicos.iterator();iter.hasNext();) {
-            Servico servicoAtual = iter.next();
-            if(servicoAtual.getCodigo() == codigo) {
-            	servicos.remove(servicoAtual);
-            	return servicos.add(servico);
-            }
-        }
-		return false;
+	public void alterar(int codigo, Servico servico) {
+    
+		servicos.updateOne(Filters.eq("codigo", codigo), Document.parse(servico.toJson()));
 	}
 	
-	public boolean remover(int codigo) {
-        for(Iterator<Servico> iter = servicos.iterator();iter.hasNext();) {
-            Servico servicoAtual = iter.next();
-            if(servicoAtual.getCodigo() == codigo) {
-            	return servicos.remove(servicoAtual);
-            }
-        }
-		return false;
+	public void remover(int codigo) {
+
+        servicos.deleteOne(Filters.eq("codigo", codigo));
 	}
 	
 	public void limpaDados() {
-		servicos.removeAll(servicos);
+		servicos.drop();
 	}
 	
+
 	public Servico getServico(int codigo) {
-        for(Iterator<Servico> iter = servicos.iterator();iter.hasNext();) {
-            Servico servicoAtual = iter.next();
-            if(servicoAtual.getCodigo() == codigo) {
-            	return servicoAtual;
-            }
-        }
-		return null;
+
+		Servico servico = servicos.find(Filters.eq("codigo", codigo)).first();
+		
+		return servico;
 	}
 	
 	public Set<Servico> getAll() {
-		return servicos;
+		
+		FindIterable<Servico> cursor = servicos.find();
+		Set<Servico> listaAll = cursor.into(new HashSet<>());
+
+		return listaAll;
 	}
+
 }

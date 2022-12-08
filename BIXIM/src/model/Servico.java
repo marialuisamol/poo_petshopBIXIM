@@ -2,6 +2,8 @@ package model;
 
 import java.util.Objects;
 
+import com.google.gson.Gson;
+
 public class Servico {
 	private int codigo;
 	private String nome;
@@ -69,6 +71,9 @@ public class Servico {
 			 + "#########################################################";
 	}
 	
-	
+	public String toJson() {
+		Gson gson = new Gson();
+		return gson.toJson(this);
+	}
 	
 }

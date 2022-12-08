@@ -1,61 +1,60 @@
 package dao;
 
-import java.util.Iterator;
+import java.util.HashSet;
 import java.util.Set;
+
+import org.bson.Document;
+
+import com.mongodb.client.FindIterable;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.model.Filters;
 
 import bd.BancoDeDados;
 import model.Animal;
 
 public class AnimalDAO {
 	
-	private Set<Animal> animais;
+	private MongoCollection<Animal> animais;
 	
 	public AnimalDAO() {
 		BancoDeDados.getInstance();
 		animais = BancoDeDados.getAnimais();
 	}
 	
-	public boolean inserir(Animal animal) {
-		return animais.add(animal);
+	public void inserir(Animal animal) {
+
+		animais.insertOne(animal);
 	}
 	
-	public boolean alterar(int codigo, Animal animal) {
-		for(Iterator<Animal> iter = animais.iterator();iter.hasNext();) {
-            Animal animalAtual = iter.next();
-            if(animalAtual.getCodigo() == codigo) {
-            	animais.remove(animalAtual);
-            	return animais.add(animal);
-            }
-        }
-		return false;
+	public void alterar(int codigo, Animal animal) {
+
+		animais.updateOne(Filters.eq("codigo", codigo), Document.parse(animal.toJson()));
 	}
 	
-	public boolean remover(int codigo) {
-        for(Iterator<Animal> iter = animais.iterator();iter.hasNext();) {
-            Animal animalAtual = iter.next();
-            if(animalAtual.getCodigo() == codigo) {
-            	return animais.remove(animalAtual);
-            }
-        }
-		return false;
+	public void remover(int codigo) {
+
+		animais.deleteOne(Filters.eq("codigo", codigo));
+        
 	}
 	
 	public void limpaDados() {
-		animais.removeAll(animais);	
+		animais.drop();	
 	}
 	
+	
 	public Animal getAnimal(int codigo) {	
-        for(Iterator<Animal> iter = animais.iterator();iter.hasNext();) {
-            Animal animalAtual = iter.next();
-            if(animalAtual.getCodigo() == codigo) {
-            	return animalAtual;
-            }
-        }
-		return null;		
+		
+		Animal animal = animais.find(Filters.eq("codigo", codigo)).first();
+		
+		return animal;
 	}
 	
 	public Set<Animal> getAll() {
-		return animais;
+		
+		FindIterable<Animal> cursor = animais.find();
+		Set<Animal> listaAll = cursor.into(new HashSet<>());
+		
+		return listaAll;
 	}
-
+	
 }
